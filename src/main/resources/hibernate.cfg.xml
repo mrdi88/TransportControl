@@ -7,6 +7,6 @@
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/tcs?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">root123</property>
-    <mapping class="" file="" jar="" package="" resource="../java/com/avectis/transportcontrol/entity/Driver.hbm.xml"/>
+    <mapping class="" file="" jar="" package="" resource="Driver.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
