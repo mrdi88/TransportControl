@@ -16,6 +16,12 @@ public class Driver {
     private String mobileNumber;
     private String organization;
 
+    public Driver(String name, String mobileNumber, String organization) {
+        this.name = name;
+        this.mobileNumber = mobileNumber;
+        this.organization = organization;
+    }
+
     public String getOrganization() {
         return organization;
     }
