@@ -8,5 +8,6 @@
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">root123</property>
     <mapping class="com.avectis.transportcontrol.entity.Driver"/>
+    <mapping class="com.avectis.transportcontrol.entity.Cargo"/>
   </session-factory>
 </hibernate-configuration>

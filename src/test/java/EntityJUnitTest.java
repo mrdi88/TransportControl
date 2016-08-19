@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import com.avectis.transportcontrol.entity.Cargo;
 import com.avectis.transportcontrol.entity.Driver;
-import java.util.List;
+import java.util.Date;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -20,11 +21,11 @@ import static org.junit.Assert.*;
  *
  * @author DPoplauski
  */
-public class appJUnitTest {
+public class EntityJUnitTest {
     private static SessionFactory sessionFactory;
     // A SessionFactory is set up once for an application!
     
-    public appJUnitTest() {
+    public EntityJUnitTest() {
     }
     
     @BeforeClass
@@ -97,12 +98,54 @@ public class appJUnitTest {
         }
         catch(Exception e) {
             System.out.println("ex: " + e);
+            fail();
         }
         System.out.println("End");
     }
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    @Test
+    public void testCargo(){
+        try {
+                // create a couple of drivers...
+                System.out.println("cargo test began");
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+                Cargo cargo1=new Cargo();
+                cargo1.setWeightIn(5000);
+                cargo1.setQuality(5);
+                Date dt= new Date();
+                cargo1.setLoadingDate(dt);
+                Long id=(Long)session.save(cargo1);
+		session.getTransaction().commit();
+		session.close();
+                System.out.println("saved in db: "+cargo1);
+                // get cargo
+                session = sessionFactory.openSession();
+		session.beginTransaction();
+		Cargo cargo2=(Cargo)session.get( Cargo.class, id );
+		session.getTransaction().commit();
+		session.close();
+		System.out.println("red from db :"+cargo2);
+                // is equal
+                assertEquals(cargo1, cargo2);
+                // delete object
+                session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.delete(cargo2);
+		session.getTransaction().commit();
+		session.close();
+                System.out.println("object deleted");
+                //check that it not exists
+                session = sessionFactory.openSession();
+		session.beginTransaction();
+		cargo2=(Cargo)session.get(Cargo.class,id);
+		session.getTransaction().commit();
+		session.close();
+                assertEquals(cargo2, null);
+        }
+        catch(Exception e) {
+            System.out.println("ex: " + e);
+            fail();
+        }
+        System.out.println("End");
+    }
 }
