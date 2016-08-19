@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import com.avectis.transportcontrol.entity.Car;
 import com.avectis.transportcontrol.entity.Cargo;
 import com.avectis.transportcontrol.entity.Driver;
 import java.util.Date;
@@ -141,6 +142,63 @@ public class EntityJUnitTest {
 		session.getTransaction().commit();
 		session.close();
                 assertEquals(cargo2, null);
+        }
+        catch(Exception e) {
+            System.out.println("ex: " + e);
+            fail();
+        }
+        System.out.println("End");
+    }
+    @Test
+    public void testCar(){
+        try {
+                // create a couple of drivers...
+                System.out.println("car test began");
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+                Car car1=new Car();
+                //driver
+                Driver dr= new Driver( "Dima", "+375292051312","avectis"); 
+                //cargo
+                Cargo cargo=new Cargo();
+                cargo.setWeightIn(5000);
+                cargo.setQuality(5);
+                Date dt= new Date();
+                cargo.setLoadingDate(dt);
+                //set prop to car
+                car1.setDriver(dr);
+                car1.setCargo(cargo);
+                car1.setFirstNumber("4700-EM1");
+                car1.setSecondNumber("4800-EM1");
+                //save
+                Long id=(Long)session.save(car1);
+		session.getTransaction().commit();
+		session.close();
+                System.out.println("saved in db: "+car1);
+                // get car
+                session = sessionFactory.openSession();
+		session.beginTransaction();
+		Car car2=(Car)session.get( Car.class, id );
+		session.getTransaction().commit();
+		session.close();
+		System.out.println("red from db :"+car2);
+                // is equal
+                assertEquals(car1, car2);
+                //delete car
+                System.out.println("car test began");
+		session = sessionFactory.openSession();
+		session.beginTransaction();
+                session.delete(car1);
+                session.getTransaction().commit();
+		session.close();
+                System.out.println("saved in db: "+car1);
+                //check if deleted
+                session = sessionFactory.openSession();
+		session.beginTransaction();
+		car1=(Car)session.get(Car.class,id);
+		session.getTransaction().commit();
+		session.close();
+                assertEquals(car1, null);
         }
         catch(Exception e) {
             System.out.println("ex: " + e);
