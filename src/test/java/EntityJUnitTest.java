@@ -209,7 +209,7 @@ public class EntityJUnitTest {
     @Test
     public void testCard(){
         try {
-
+             System.out.println("End");       
         }
         catch(Exception e) {
             System.out.println("ex: " + e);
