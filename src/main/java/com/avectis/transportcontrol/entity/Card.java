@@ -6,18 +6,36 @@
 package com.avectis.transportcontrol.entity;
 
 import java.util.Date;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
  * @author DPoplauski
  */
+@Entity
+@Table(name="cards")
 public class Card {
-
-    private String cardId;
+    @Id
+    @GeneratedValue(generator="increment")
+    @GenericGenerator(name="increment",strategy="increment")
+    private long cardId;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "carId")
     private Car car;
     private long cardNumber;
     private int state;
     private int accessLevel;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
     
     public Date getCreateDate() {
@@ -50,12 +68,21 @@ public class Card {
     public void setCar(Car car) {
         this.car = car;
     }
-    public String getCardId() {
+    public long getCardId() {
         return cardId;
     }
-    public void setCardId(String cardId) {
+    public void setCardId(long cardId) {
         this.cardId = cardId;
     }
     public Card() {
     }
+
+    public Card(Car car, long cardNumber, int state, int accessLevel) {
+        this.car = car;
+        this.cardNumber = cardNumber;
+        this.state = state;
+        this.accessLevel = accessLevel;
+        this.createDate=new Date();
+    }
+    
 }

@@ -26,9 +26,6 @@ public class Driver {
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy="increment")
     private long driverId;
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "carId")
-    private Car car;
     private String name;
     private String mobileNumber;
     private String organization;
@@ -61,12 +58,6 @@ public class Driver {
     }
     public void setDriverId(long driverId) {
         this.driverId = driverId;
-    }
-    public Car getCar() {
-        return car;
-    }
-    public void setCar(Car car) {
-        this.car = car;
     }
     public Driver() {
     }

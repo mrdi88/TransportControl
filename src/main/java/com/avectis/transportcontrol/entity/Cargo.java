@@ -5,15 +5,11 @@
  */
 package com.avectis.transportcontrol.entity;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -30,9 +26,6 @@ public class Cargo {
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment",strategy="increment")
     private long cargoId;
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "carId")
-    private Car car;
     private int quality;
     private int weightIn;
     private int weightOut;
@@ -90,12 +83,6 @@ public class Cargo {
     }
     public void setCargoId(long cargoId) {
         this.cargoId = cargoId;
-    }
-    public Car getCar() {
-        return car;
-    }
-    public void setCar(Car car) {
-        this.car = car;
     }
     
     public Cargo() {

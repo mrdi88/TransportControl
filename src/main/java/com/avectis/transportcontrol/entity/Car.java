@@ -30,9 +30,11 @@ public class Car {
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment",strategy="increment")
     private long carId;
-    @OneToOne(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "cargoId")
     private Cargo cargo;
-    @OneToOne(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "driverId")
     private Driver driver;
     private String destination;
     private String firstNumber;
@@ -93,14 +95,13 @@ public class Car {
     public Car() {
     }
 
-    public Car(Cargo cargo, Driver driver, String destination, String firstNumber, String secondNumber, Date createDate, Date leaveDate) {
+    public Car(Cargo cargo, Driver driver, String destination, String firstNumber, String secondNumber) {
         this.cargo = cargo;
         this.driver = driver;
         this.destination = destination;
         this.firstNumber = firstNumber;
         this.secondNumber = secondNumber;
-        this.createDate = createDate;
-        this.leaveDate = leaveDate;
+        this.createDate = new Date();
     }
 
     @Override
@@ -167,5 +168,4 @@ public class Car {
         }
         return true;
     }
-    
 }
