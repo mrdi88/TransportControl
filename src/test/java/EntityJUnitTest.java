@@ -206,4 +206,15 @@ public class EntityJUnitTest {
         }
         System.out.println("End");
     }
+    @Test
+    public void testCard(){
+        try {
+
+        }
+        catch(Exception e) {
+            System.out.println("ex: " + e);
+            fail();
+        }
+        System.out.println("End");
+    }
 }
