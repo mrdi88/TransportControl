@@ -6,6 +6,7 @@
 package com.avectis.transportcontrol.entity;
 
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -83,6 +84,49 @@ public class Card {
         this.state = state;
         this.accessLevel = accessLevel;
         this.createDate=new Date();
+    }
+
+    @Override
+    public String toString() {
+        return "Card{" + "cardId=" + cardId + ", car=" + car + ", cardNumber=" + cardNumber + ", state=" + state + ", accessLevel=" + accessLevel + ", createDate=" + createDate + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Card other = (Card) obj;
+        if (!Objects.equals(this.car, other.car)) {
+            return false;
+        }
+        if (this.cardNumber != other.cardNumber) {
+            return false;
+        }
+        if (this.state != other.state) {
+            return false;
+        }
+        if (this.accessLevel != other.accessLevel) {
+            return false;
+        }
+        if ((this.createDate==null && other.createDate!=null) || this.createDate!=null && other.createDate==null){
+            return false;
+        }
+        if (this.createDate!=null && other.createDate!=null){
+            if ((!Objects.equals(this.createDate.getTime()/1000, other.createDate.getTime()/1000))) {
+                return false;
+            }
+        }
+        return true;
     }
     
 }
