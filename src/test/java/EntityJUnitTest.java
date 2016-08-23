@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 import com.avectis.transportcontrol.entity.Car;
+import com.avectis.transportcontrol.entity.Card;
 import com.avectis.transportcontrol.entity.Cargo;
 import com.avectis.transportcontrol.entity.Driver;
 import java.util.Date;
@@ -65,7 +66,7 @@ public class EntityJUnitTest {
     public void testDriver(){
         try {
                 // create a couple of drivers...
-                System.out.println("driver test began");
+                System.out.println("driver test");
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
                 Driver dr1=new Driver( "Dima", "+375292051312","avectis");
@@ -107,7 +108,7 @@ public class EntityJUnitTest {
     public void testCargo(){
         try {
                 // create a couple of drivers...
-                System.out.println("cargo test began");
+                System.out.println("cargo test");
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
                 Cargo cargo1=new Cargo();
@@ -153,7 +154,7 @@ public class EntityJUnitTest {
     public void testCar(){
         try {
                 // create a couple of drivers...
-                System.out.println("car test began");
+                System.out.println("car test");
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
                 Car car1=new Car();
@@ -185,13 +186,11 @@ public class EntityJUnitTest {
                 // is equal
                 assertEquals(car1, car2);
                 //delete car
-                System.out.println("car test began");
 		session = sessionFactory.openSession();
 		session.beginTransaction();
                 session.delete(car1);
                 session.getTransaction().commit();
 		session.close();
-                System.out.println("saved in db: "+car1);
                 //check if deleted
                 session = sessionFactory.openSession();
 		session.beginTransaction();
@@ -209,7 +208,75 @@ public class EntityJUnitTest {
     @Test
     public void testCard(){
         try {
-             System.out.println("EndSecondMaster");       
+                System.out.println("card test");
+                Car car=new Car();
+                //driver
+                Driver driver= new Driver( "Dima", "+375292051312","avectis"); 
+                //cargo
+                Cargo cargo=new Cargo();
+                cargo.setWeightIn(5000);
+                cargo.setQuality(5);
+                cargo.setLoadingDate(new Date());
+                //set prop to car
+                car.setDriver(driver);
+                car.setCargo(cargo);
+                car.setFirstNumber("4700-EM1");
+                car.setSecondNumber("4800-EM1");
+                //new card 
+                Card card=new Card(car,23423L,0,1);
+                //save
+                Session session = sessionFactory.openSession();
+		session.beginTransaction();
+                Long car_id=(Long)session.save(car);
+                Long id=(Long)session.save(card);
+                session.getTransaction().commit();
+		session.close();
+                System.out.println("saved in db: "+card);
+                //get 
+                session = sessionFactory.openSession();
+		session.beginTransaction();
+		Card card2=(Card)session.get( Card.class, id );
+                card2.getCar().getDriver().setName("Nikolay");
+		session.getTransaction().commit();
+		session.close();
+		System.out.println("red from db :"+card2);
+                // is equal
+                //assertEquals(card, card2);
+                //delete 
+		session = sessionFactory.openSession();
+		session.beginTransaction();
+                session.delete(card2);
+                session.getTransaction().commit();
+		session.close();
+                //check if deleted
+                session = sessionFactory.openSession();
+		session.beginTransaction();
+		card=(Card)session.get(Card.class,id);
+		session.getTransaction().commit();
+		session.close();
+                assertEquals(card, null);
+                //get car
+                session = sessionFactory.openSession();
+		session.beginTransaction();
+		car=(Car)session.get( Car.class, car_id );
+                assertNotEquals(car, null);
+		session.getTransaction().commit();
+		session.close();
+		System.out.println("red from db :"+card2);
+                //delete car
+		session = sessionFactory.openSession();
+		session.beginTransaction();
+                session.delete(car);
+                session.getTransaction().commit();
+		session.close();
+                //check if deleted
+                session = sessionFactory.openSession();
+		session.beginTransaction();
+		car=(Car)session.get(Car.class,car_id);
+		session.getTransaction().commit();
+		session.close();
+                assertEquals(car, null);
+                System.out.println("End");       
         }
         catch(Exception e) {
             System.out.println("ex: " + e);
