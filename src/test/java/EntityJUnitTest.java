@@ -7,6 +7,8 @@ import com.avectis.transportcontrol.entity.Car;
 import com.avectis.transportcontrol.entity.Card;
 import com.avectis.transportcontrol.entity.Cargo;
 import com.avectis.transportcontrol.entity.Driver;
+import com.avectis.transportcontrol.entity.TransportQueue;
+import com.avectis.transportcontrol.entity.TransportQueueElement;
 import java.util.Date;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -277,6 +279,28 @@ public class EntityJUnitTest {
 		session.close();
                 assertEquals(car, null);
                 System.out.println("End");       
+        }
+        catch(Exception e) {
+            System.out.println("ex: " + e);
+            fail();
+        }
+        System.out.println("End");
+    }
+    @Test
+    public void QueueTest(){
+        try{
+            System.out.println("Queue test");
+            //greate
+            TransportQueueElement qe=new TransportQueueElement();
+            TransportQueue tq=new TransportQueue();
+            tq.setName("r01");
+            tq.getqElements().add(qe);
+            //save
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.save(tq);
+            session.getTransaction().commit();
+            session.close();
         }
         catch(Exception e) {
             System.out.println("ex: " + e);

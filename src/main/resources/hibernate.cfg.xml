@@ -10,6 +10,8 @@
     <mapping class="com.avectis.transportcontrol.entity.Driver" file="" jar="" package="" resource=""/>
     <mapping class="com.avectis.transportcontrol.entity.Cargo" file="" jar="" package="" resource=""/>
     <mapping class="com.avectis.transportcontrol.entity.Car" file="" jar="" package="" resource=""/>
-    <mapping class="com.avectis.transportcontrol.entity.Card"/>
+    <mapping class="com.avectis.transportcontrol.entity.Card" file="" jar="" package="" resource=""/>
+    <mapping class="com.avectis.transportcontrol.entity.TransportQueue"/>
+    <mapping class="com.avectis.transportcontrol.entity.TransportQueueElement"/>
   </session-factory>
 </hibernate-configuration>
