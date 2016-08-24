@@ -22,10 +22,10 @@ import org.hibernate.criterion.Restrictions;
  * @author DPoplauski
  */
 public class CarDAO {
-    /**
-     * create new not initialied Driver entity using Hibernate
+     /**
+     * unpade entity using Hibernate
      * 
-     * @return created driver entity
+     * @param object Object - witch entity to update
      */
     public static void Update(Object object){
         Session session=HibernateUtil.getSessionFactory().openSession();
