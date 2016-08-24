@@ -26,7 +26,7 @@ public class TransportQueueElement {
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment",strategy="increment")
     private long qElementId;
-    @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL,orphanRemoval = true)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cardId")
     private Card card;
 

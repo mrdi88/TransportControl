@@ -311,6 +311,7 @@ public class EntityJUnitTest {
             Session session = sessionFactory.openSession();
             session.beginTransaction();
             Long car_id=(Long)session.save(car);
+            Long card_id=(Long)session.save(card);
             Long tq_id=(Long)session.save(tq);
             session.getTransaction().commit();
             session.close();
@@ -332,23 +333,27 @@ public class EntityJUnitTest {
             session.getTransaction().commit();
             session.close();
             assertEquals(tq.getqElements().size(),3);
-            //delete tg and car
+            //delete tg and car,card
             session = sessionFactory.openSession();
             session.beginTransaction();
             tq=session.get(TransportQueue.class,tq_id);
+            card=session.get(Card.class,card_id);
             car=session.get(Car.class,car_id);
             session.delete(tq);
+            session.delete(card);
             session.delete(car);
             session.getTransaction().commit();
             session.close();
-            //check if deleted tq and car
+            //check if deleted tq and car,card
             session = sessionFactory.openSession();
             session.beginTransaction();
             tq=session.get(TransportQueue.class,tq_id);
+            card=session.get(Card.class,card_id);
             car=session.get(Car.class,car_id);
             session.getTransaction().commit();
             session.close();
             assertEquals(tq,null);
+            assertEquals(card,null);
             assertEquals(car,null);
             
         }
