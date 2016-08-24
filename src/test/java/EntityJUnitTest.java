@@ -34,7 +34,7 @@ public class EntityJUnitTest {
     
     @BeforeClass
     public static void setUpClass() {
-        System.out.println("tests begins");
+        System.out.println("entities test begins");
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                         .configure() // configures settings from hibernate.cfg.xml
                         .build();
@@ -51,7 +51,7 @@ public class EntityJUnitTest {
     
     @AfterClass
     public static void tearDownClass() {
-        System.out.println("tests ends");
+        System.out.println("entities test ends");
         if ( sessionFactory != null ) {
 			sessionFactory.close();
 	}

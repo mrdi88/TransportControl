@@ -9,14 +9,31 @@ import com.avectis.transportcontrol.entity.Car;
 import com.avectis.transportcontrol.entity.Cargo;
 import com.avectis.transportcontrol.entity.Driver;
 import com.avectis.transportcontrol.util.HibernateUtil;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
  * @author DPoplauski
  */
 public class CarDAO {
+    /**
+     * create new not initialied Driver entity using Hibernate
+     * 
+     * @return created driver entity
+     */
+    public static void Update(Object object){
+        Session session=HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.update(object);
+	session.getTransaction().commit();
+	session.close();
+    }
     /**
      * create new not initialied Driver entity using Hibernate
      * 
@@ -147,7 +164,7 @@ public class CarDAO {
      * @param secondNumber String - number of trailer
      * @return created Car entity
      */
-    public static Car createCar(Cargo cargo, Driver driver, String destination, String firstNumber, String secondNumber){
+    public static Car createCar(Cargo cargo, Driver driver, String firstNumber, String secondNumber, String destination){
         Car car=new Car(cargo, driver, destination, firstNumber, secondNumber);
         Session session=HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -184,6 +201,30 @@ public class CarDAO {
 	session.getTransaction().commit();
 	session.close();
         return car;
+    }
+    /**
+     * get Cars for period from DB using Hibernate
+     * 
+     * @param startDate Date - from date
+     * @param endDate Date - to date
+     * @return List of Car objects
+     */
+    public static List<Car> getCars(Date startDate, Date endDate){
+        List<Car> cars = new ArrayList<>();
+        Session session=HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(Car.class);
+        if(startDate != null) {
+            criteria.add(Restrictions.ge("createDate", startDate));
+        }
+        if(endDate != null) {
+            criteria.add(Restrictions.le("createDate", endDate));
+        }
+        criteria.addOrder(Order.asc("createDate"));
+        cars=criteria.list();
+	session.getTransaction().commit();
+	session.close();
+        return cars;
     }
     /**
      * delete Car object from DB using Hibernate

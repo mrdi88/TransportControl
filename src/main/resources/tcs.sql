@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost:3306
--- Время создания: Авг 24 2016 г., 00:32
+-- Время создания: Авг 24 2016 г., 07:54
 -- Версия сервера: 5.5.39
 -- Версия PHP: 5.4.33
 
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `cars` (
   `secondNumber` char(10) NOT NULL,
   `createDate` timestamp NULL DEFAULT NULL,
   `leaveDate` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `drivers` (
   `name` varchar(30) DEFAULT NULL,
   `mobileNumber` char(13) DEFAULT NULL,
   `organization` char(30) DEFAULT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -181,12 +181,12 @@ MODIFY `cargoId` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
 -- AUTO_INCREMENT для таблицы `cars`
 --
 ALTER TABLE `cars`
-MODIFY `carId` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+MODIFY `carId` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT для таблицы `drivers`
 --
 ALTER TABLE `drivers`
-MODIFY `driverId` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+MODIFY `driverId` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=29;
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
