@@ -48,12 +48,19 @@ public class Car {
         return leaveDate;
     }
     public void setLeaveDate(Date leaveDate) {
+        if(leaveDate!=null){
+            leaveDate.setTime(leaveDate.getTime()-leaveDate.getTime()%1000);
+        }
+        
         this.leaveDate = leaveDate;
     }
     public Date getCreateDate() {
         return createDate;
     }
     public void setCreateDate(Date createDate) {
+        if(createDate!=null){
+            createDate.setTime(createDate.getTime()-createDate.getTime()%1000);
+        }
         this.createDate = createDate;
     }
     public String getSecondNumber() {
@@ -101,7 +108,9 @@ public class Car {
         this.destination = destination;
         this.firstNumber = firstNumber;
         this.secondNumber = secondNumber;
-        this.createDate = new Date();
+        Date dt=new Date();
+        dt.setTime(dt.getTime()-dt.getTime()%1000);
+        this.createDate = dt;
     }
 
     @Override
@@ -150,21 +159,11 @@ public class Car {
         if (!Objects.equals(this.secondNumber, other.secondNumber)) {
             return false;
         }
-        if ((this.createDate==null && other.createDate!=null) || this.createDate!=null && other.createDate==null){
-            return false;
-        }
-        if (this.createDate!=null && other.createDate!=null){
-            if ((!Objects.equals(this.createDate.getTime()/1000, other.createDate.getTime()/1000))) {
+        if ((!Objects.equals(this.createDate, other.createDate))) {
                 return false;
-            }
         }
-        if ((this.leaveDate==null && other.leaveDate!=null) || this.leaveDate!=null && other.leaveDate==null){
-            return false;
-        }
-        if (this.leaveDate!=null && other.leaveDate!=null){
-            if ((!Objects.equals(this.leaveDate.getTime()/1000, other.leaveDate.getTime()/1000))) {
+        if ((!Objects.equals(this.leaveDate, other.leaveDate))) {
                 return false;
-            }
         }
         return true;
     }

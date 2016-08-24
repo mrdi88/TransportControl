@@ -43,6 +43,9 @@ public class Card {
         return createDate;
     }
     public void setCreateDate(Date createDate) {
+        if (createDate!=null){
+            createDate.setTime(createDate.getTime()-createDate.getTime()%1000);
+        }
         this.createDate = createDate;
     }
     public int getAccessLevel() {
@@ -83,7 +86,9 @@ public class Card {
         this.cardNumber = cardNumber;
         this.state = state;
         this.accessLevel = accessLevel;
-        this.createDate=new Date();
+        Date dt=new Date();
+        dt.setTime(dt.getTime()-dt.getTime()%1000);
+        this.createDate=dt;
     }
 
     @Override
@@ -118,13 +123,8 @@ public class Card {
         if (this.accessLevel != other.accessLevel) {
             return false;
         }
-        if ((this.createDate==null && other.createDate!=null) || this.createDate!=null && other.createDate==null){
-            return false;
-        }
-        if (this.createDate!=null && other.createDate!=null){
-            if ((!Objects.equals(this.createDate.getTime()/1000, other.createDate.getTime()/1000))) {
+        if (!Objects.equals(this.createDate, other.createDate)) {
                 return false;
-            }
         }
         return true;
     }

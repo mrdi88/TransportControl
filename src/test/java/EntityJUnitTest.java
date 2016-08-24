@@ -10,6 +10,7 @@ import com.avectis.transportcontrol.entity.Driver;
 import com.avectis.transportcontrol.entity.TransportQueue;
 import com.avectis.transportcontrol.entity.TransportQueueElement;
 import java.util.Date;
+import java.util.TimeZone;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -34,6 +35,7 @@ public class EntityJUnitTest {
     
     @BeforeClass
     public static void setUpClass() {
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         System.out.println("entities test begins");
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                         .configure() // configures settings from hibernate.cfg.xml

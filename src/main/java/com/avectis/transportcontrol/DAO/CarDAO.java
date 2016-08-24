@@ -166,6 +166,7 @@ public class CarDAO {
      */
     public static Car createCar(Cargo cargo, Driver driver, String firstNumber, String secondNumber, String destination){
         Car car=new Car(cargo, driver, destination, firstNumber, secondNumber);
+        car.setCreateDate(new Date());
         Session session=HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Long id=(Long)session.save(car);

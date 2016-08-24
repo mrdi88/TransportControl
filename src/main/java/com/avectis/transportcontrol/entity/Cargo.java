@@ -40,6 +40,9 @@ public class Cargo {
         return loadingDate;
     }
     public void setLoadingDate(Date loadingDate) {
+        if (loadingDate!=null){
+            loadingDate.setTime(loadingDate.getTime()-loadingDate.getTime()%1000);
+        }
         this.loadingDate = loadingDate;
     }
     public String getLoadingPlace() {
@@ -52,6 +55,9 @@ public class Cargo {
         return dischargeDate;
     }
     public void setDischargeDate(Date dischargeDate) {
+        if (dischargeDate!=null){
+            dischargeDate.setTime(dischargeDate.getTime()-dischargeDate.getTime()%1000);
+        }
         this.dischargeDate = dischargeDate;
     }
     public String getDischargingPlace() {
@@ -93,8 +99,14 @@ public class Cargo {
         this.weightIn = weightIn;
         this.weightOut = weightOut;
         this.dischargingPlace = dischargingPlace;
+        if (dischargeDate!=null){
+            dischargeDate.setTime(dischargeDate.getTime()-dischargeDate.getTime()%1000);
+        }
         this.dischargeDate = dischargeDate;
         this.loadingPlace = loadingPlace;
+        if (loadingDate!=null){
+            loadingDate.setTime(loadingDate.getTime()-loadingDate.getTime()%1000);
+        }
         this.loadingDate = loadingDate;
     }
 
@@ -141,25 +153,25 @@ public class Cargo {
         if (!Objects.equals(this.dischargingPlace, other.dischargingPlace)) {
             return false;
         }
-        if ((this.dischargeDate==null && other.dischargeDate!=null) || this.dischargeDate!=null && other.dischargeDate==null){
-            return false;
-        }
-        if (this.dischargeDate!=null && other.dischargeDate!=null){
-            if ((!Objects.equals(this.dischargeDate.getTime()/1000, other.dischargeDate.getTime()/1000))) {
-                return false;
-            }
-        }
-        if (!Objects.equals(this.loadingPlace, other.loadingPlace)) {
-            return false;
-        }
-        if ((this.loadingDate==null && other.loadingDate!=null) || this.loadingDate!=null && other.loadingDate==null){
-            return false;
-        }
-        if (this.loadingDate!=null && other.loadingDate!=null){
-            if ((!Objects.equals(this.loadingDate.getTime()/1000, other.loadingDate.getTime()/1000))) {
-                return false;
-            }
-        }
+//        if ((this.dischargeDate==null && other.dischargeDate!=null) || this.dischargeDate!=null && other.dischargeDate==null){
+//            return false;
+//        }
+//        if (this.dischargeDate!=null && other.dischargeDate!=null){
+//            if ((!Objects.equals(this.dischargeDate.getTime()/1000, other.dischargeDate.getTime()/1000))) {
+//                return false;
+//            }
+//        }
+//        if (!Objects.equals(this.loadingPlace, other.loadingPlace)) {
+//            return false;
+//        }
+//        if ((this.loadingDate==null && other.loadingDate!=null) || this.loadingDate!=null && other.loadingDate==null){
+//            return false;
+//        }
+//        if (this.loadingDate!=null && other.loadingDate!=null){
+//            if ((!Objects.equals(this.loadingDate.getTime()/1000, other.loadingDate.getTime()/1000))) {
+//                return false;
+//            }
+//        }
         return true;
     }
     

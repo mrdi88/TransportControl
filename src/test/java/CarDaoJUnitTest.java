@@ -84,10 +84,11 @@ public class CarDaoJUnitTest {
             cargo.setQuality(3);
             CarDAO.Update(cargo);
             Car car=CarDAO.createCar(cargo, driver, "4755-KK7", "7777-KT7", null);
-            System.out.println("created car: " + car);
+            System.out.println("cr  car: " + car);
             assertNotNull(car);
             //get car and check
             Car car_temp=CarDAO.getCar(car.getCarId());
+            System.out.println("get car: " + car_temp);
             assertEquals(car,car_temp);
             //try list
             Driver driver2=CarDAO.createDriver("Dunkan Maklaud", "+375295023336", "OAO Shilda");
