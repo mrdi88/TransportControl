@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost:3306
--- Время создания: Авг 23 2016 г., 23:30
+-- Время создания: Авг 24 2016 г., 00:32
 -- Версия сервера: 5.5.39
 -- Версия PHP: 5.4.33
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `cards` (
   `state` int(11) NOT NULL,
   `accessLevel` int(11) NOT NULL,
   `createDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `cargos` (
   `dischargeDate` timestamp NULL DEFAULT NULL,
   `loadingPlace` char(20) DEFAULT NULL,
   `loadingDate` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `cars` (
   `secondNumber` char(10) NOT NULL,
   `createDate` timestamp NULL DEFAULT NULL,
   `leaveDate` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `drivers` (
   `name` varchar(30) DEFAULT NULL,
   `mobileNumber` char(13) DEFAULT NULL,
   `organization` char(30) DEFAULT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -101,7 +101,6 @@ CREATE TABLE IF NOT EXISTS `queues` (
 
 CREATE TABLE IF NOT EXISTS `queues_elements` (
   `qElementId` bigint(20) NOT NULL,
-  `orderNumber` int(11) DEFAULT NULL,
   `cardId` bigint(20) DEFAULT NULL,
   `queueId` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -114,7 +113,8 @@ CREATE TABLE IF NOT EXISTS `queues_elements` (
 
 CREATE TABLE IF NOT EXISTS `queues_queues_elements` (
   `TransportQueue_queueId` bigint(20) NOT NULL,
-  `queueElements_qElementId` bigint(20) NOT NULL
+  `queueElements_qElementId` bigint(20) NOT NULL,
+  `order_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -161,7 +161,7 @@ ALTER TABLE `queues_elements`
 -- Индексы таблицы `queues_queues_elements`
 --
 ALTER TABLE `queues_queues_elements`
- ADD PRIMARY KEY (`TransportQueue_queueId`), ADD KEY `FKr38us2n8g5p9494sd3392` (`queueElements_qElementId`);
+ ADD KEY `FKr38us2n8g5p9494sd3392` (`queueElements_qElementId`), ADD KEY `TransportQueue_queueId` (`TransportQueue_queueId`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
@@ -171,22 +171,22 @@ ALTER TABLE `queues_queues_elements`
 -- AUTO_INCREMENT для таблицы `cards`
 --
 ALTER TABLE `cards`
-MODIFY `cardId` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `cardId` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT для таблицы `cargos`
 --
 ALTER TABLE `cargos`
-MODIFY `cargoId` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+MODIFY `cargoId` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT для таблицы `cars`
 --
 ALTER TABLE `cars`
-MODIFY `carId` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `carId` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT для таблицы `drivers`
 --
 ALTER TABLE `drivers`
-MODIFY `driverId` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+MODIFY `driverId` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --

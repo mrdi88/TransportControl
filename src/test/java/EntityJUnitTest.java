@@ -291,16 +291,66 @@ public class EntityJUnitTest {
         try{
             System.out.println("Queue test");
             //greate
+            Car car=new Car();
+            Driver driver= new Driver( "Dima", "+375292051312","avectis"); 
+            Cargo cargo=new Cargo();
+            cargo.setWeightIn(5000);
+            cargo.setQuality(5);
+            cargo.setLoadingDate(new Date());
+            car.setDriver(driver);
+            car.setCargo(cargo);
+            car.setFirstNumber("4700-EM1");
+            car.setSecondNumber("4800-EM1");
+            Card card=new Card(car,23423L,0,1);
             TransportQueueElement qe=new TransportQueueElement();
+            qe.setCard(card);
             TransportQueue tq=new TransportQueue();
             tq.setName("r01");
             tq.getqElements().add(qe);
             //save
             Session session = sessionFactory.openSession();
             session.beginTransaction();
-            session.save(tq);
+            Long car_id=(Long)session.save(car);
+            Long tq_id=(Long)session.save(tq);
             session.getTransaction().commit();
             session.close();
+            //get and add
+            TransportQueueElement qe2=new TransportQueueElement();
+            TransportQueueElement qe3=new TransportQueueElement();
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            tq=session.get(TransportQueue.class,tq_id);
+            tq.getqElements().add(qe2);
+            tq.getqElements().add(qe3);
+            session.getTransaction().commit();
+            session.close();
+            // read
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            tq=session.get(TransportQueue.class,tq_id);
+            System.out.println("red: " + tq);
+            session.getTransaction().commit();
+            session.close();
+            assertEquals(tq.getqElements().size(),3);
+            //delete tg and car
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            tq=session.get(TransportQueue.class,tq_id);
+            car=session.get(Car.class,car_id);
+            session.delete(tq);
+            session.delete(car);
+            session.getTransaction().commit();
+            session.close();
+            //check if deleted tq and car
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            tq=session.get(TransportQueue.class,tq_id);
+            car=session.get(Car.class,car_id);
+            session.getTransaction().commit();
+            session.close();
+            assertEquals(tq,null);
+            assertEquals(car,null);
+            
         }
         catch(Exception e) {
             System.out.println("ex: " + e);

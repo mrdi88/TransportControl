@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -29,7 +30,7 @@ public class TransportQueue {
     private long queueId;
     private String name;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    //@OrderColumn(name="orderNumber")
+    @OrderColumn(name="order_id")
     private List<TransportQueueElement> queueElements=new ArrayList<>();
     
     public List getqElements() {

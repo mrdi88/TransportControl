@@ -5,6 +5,7 @@
  */
 package com.avectis.transportcontrol.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,8 +26,7 @@ public class TransportQueueElement {
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment",strategy="increment")
     private long qElementId;
-    private int orderNumber;
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(name = "cardId")
     private Card card;
 
@@ -35,12 +35,6 @@ public class TransportQueueElement {
     }
     public void setCard(Card card) {
         this.card = card;
-    }
-    public int getOrderNumber() {
-        return orderNumber;
-    }
-    public void setOrderNumber(int orderNumber) {
-        this.orderNumber = orderNumber;
     }
     public long getqElementId() {
         return qElementId;
@@ -51,14 +45,13 @@ public class TransportQueueElement {
     public TransportQueueElement() {
     }
 
-    public TransportQueueElement(int orderNumber, Card card) {
-        this.orderNumber = orderNumber;
+    public TransportQueueElement(Card card) {
         this.card = card;
     }
 
     @Override
     public String toString() {
-        return "TransportQueueElement{" + "qElementId=" + qElementId + ", orderNumber=" + orderNumber + ", card=" + card + '}';
+        return "TransportQueueElement{" + "qElementId=" + qElementId + ", card=" + card + '}';
     }
     
 }
