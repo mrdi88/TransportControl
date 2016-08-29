@@ -121,6 +121,7 @@ public class TransportQueueDAO {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             tq = (TransportQueue)session.get( TransportQueue.class, id );
+            if (tq!=null) Hibernate.initialize(tq.getqElements());
             session.getTransaction().commit();
         }
         return tq;

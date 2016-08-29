@@ -60,13 +60,23 @@ public class TransportQueueDaoJUnitTest {
             }
             System.out.println("list size: " + list.size());
             System.out.println("TransportQueue list: " + list);
-            assertEquals(list.size(), 4);
+            //asserts
+            System.out.println("tq1: " + tq1);
+            System.out.println("tD1: " + TransportQueueDAO.getQueue(tq1.getQueueId()));
+            assertEquals(tq1, TransportQueueDAO.getQueue(tq1.getQueueId()));
+            assertEquals(tq2, TransportQueueDAO.getQueue(tq2.getQueueId()));
+            assertEquals(tq3, TransportQueueDAO.getQueue(tq3.getQueueId()));
+            assertEquals(tq4, TransportQueueDAO.getQueue(tq4.getQueueId()));
             //delete
-            for(TransportQueue tq:list){
-                System.out.println("queue name: " + tq.getName());
-                TransportQueueDAO.deleteQueue(tq);
-            }
-            assertEquals(TransportQueueDAO.getQueueList().size(), 0);
+            TransportQueueDAO.deleteQueue(tq1);
+            TransportQueueDAO.deleteQueue(tq2);
+            TransportQueueDAO.deleteQueue(tq3);
+            TransportQueueDAO.deleteQueue(tq4);
+            //asserts
+            assertEquals(null, TransportQueueDAO.getQueue(tq1.getQueueId()));
+            assertEquals(null, TransportQueueDAO.getQueue(tq2.getQueueId()));
+            assertEquals(null, TransportQueueDAO.getQueue(tq3.getQueueId()));
+            assertEquals(null, TransportQueueDAO.getQueue(tq4.getQueueId()));
         }
         catch(Exception e){
             System.out.println("TransportQueue ex: " + e);
