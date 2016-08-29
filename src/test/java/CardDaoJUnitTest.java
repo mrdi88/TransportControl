@@ -28,11 +28,11 @@ public class CardDaoJUnitTest {
     @BeforeClass
     public static void setUpClass() {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-        System.out.println("CarDao test begins");
+        System.out.println("CardDao test begins");
     }
     @AfterClass
     public static void tearDownClass() {
-        System.out.println("CarDao test ends");
+        System.out.println("CardDao test ends");
     }
     
     @Test

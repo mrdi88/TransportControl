@@ -7,16 +7,11 @@ package com.avectis.transportcontrol.DAO;
 
 import com.avectis.transportcontrol.entity.Car;
 import com.avectis.transportcontrol.entity.Card;
-import com.avectis.transportcontrol.entity.Cargo;
-import com.avectis.transportcontrol.entity.Driver;
 import com.avectis.transportcontrol.util.HibernateUtil;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -29,11 +24,11 @@ public class CardDAO {
      * @param object Object - witch entity to update
      */
     public static void Update(Object object){
-        Session session=HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.update(object);
-	session.getTransaction().commit();
-	session.close();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.update(object);
+            session.getTransaction().commit();
+        }
     }
     /**
      * create new not initialied Card entity using Hibernate
@@ -42,12 +37,12 @@ public class CardDAO {
      */
     public static Card createCard(){
         Card card=new Card();
-        Session session=HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Long id=(Long)session.save(card);
-        card.setCardId(id);
-	session.getTransaction().commit();
-	session.close();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            Long id=(Long)session.save(card);
+            card.setCardId(id);
+            session.getTransaction().commit();
+        }
         return card;
     }
     /**
@@ -61,25 +56,27 @@ public class CardDAO {
      */
     public static Card createDriver(Car car, long cardNumber, int accessLevel, int state){
         Card card=new Card(car, cardNumber, state, accessLevel);
-        Session session=HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Long id=(Long)session.save(card);
-        card.setCardId(id);
-	session.getTransaction().commit();
-	session.close();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            Long id=(Long)session.save(card);
+            card.setCardId(id);
+            session.getTransaction().commit();
+        }
         return card;
     }
     /**
      * get Card object from DB using Hibernate
      * 
+     * @param id Long - identifier of entity object
      * @return Car object
      */
     public static Card getCard(Long id){
-        Session session=HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Card card=(Card)session.get( Card.class, id );
-	session.getTransaction().commit();
-	session.close();
+        Card card;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            card = (Card)session.get( Card.class, id );
+            session.getTransaction().commit();
+        }
         return card;
     }
     /**
@@ -89,12 +86,12 @@ public class CardDAO {
      */
     public static List<Card> getCards(){
         List<Card> cards = new ArrayList<>();
-        Session session=HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Criteria criteria = session.createCriteria(Card.class);
-        cards=criteria.list();
-	session.getTransaction().commit();
-	session.close();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            Criteria criteria = session.createCriteria(Card.class);
+            cards=criteria.list();
+            session.getTransaction().commit();
+        }
         return cards;
     }
     /**
@@ -103,10 +100,10 @@ public class CardDAO {
      * @param card Card - card object to delete
      */
     public static void deleteCard(Card card){
-        Session session=HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.delete(card);
-	session.getTransaction().commit();
-	session.close();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.delete(card);
+            session.getTransaction().commit();
+        }
     }
 }

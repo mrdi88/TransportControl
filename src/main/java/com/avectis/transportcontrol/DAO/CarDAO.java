@@ -28,11 +28,11 @@ public class CarDAO {
      * @param object Object - witch entity to update
      */
     public static void Update(Object object){
-        Session session=HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.update(object);
-	session.getTransaction().commit();
-	session.close();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.update(object);
+            session.getTransaction().commit();
+        }
     }
     /**
      * create new not initialied Driver entity using Hibernate
@@ -41,12 +41,12 @@ public class CarDAO {
      */
     public static Driver createDriver(){
         Driver driver=new Driver();
-        Session session=HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Long id=(Long)session.save(driver);
-        driver.setDriverId(id);
-	session.getTransaction().commit();
-	session.close();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            Long id=(Long)session.save(driver);
+            driver.setDriverId(id);
+            session.getTransaction().commit();
+        }
         return driver;
     }
     /**
@@ -59,25 +59,27 @@ public class CarDAO {
      */
     public static Driver createDriver(String name, String mobileNumber, String organization){
         Driver driver=new Driver(name,mobileNumber,organization);
-        Session session=HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Long id=(Long)session.save(driver);
-        driver.setDriverId(id);
-	session.getTransaction().commit();
-	session.close();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            Long id=(Long)session.save(driver);
+            driver.setDriverId(id);
+            session.getTransaction().commit();
+        }
         return driver;
     }
     /**
      * get Driver object from DB using Hibernate
      * 
+     * @param id Long - identifier of entity object
      * @return Driver object
      */
     public static Driver getDriver(Long id){
-        Session session=HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Driver driver=(Driver)session.get( Driver.class, id );
-	session.getTransaction().commit();
-	session.close();
+        Driver driver;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            driver = (Driver)session.get( Driver.class, id );
+            session.getTransaction().commit();
+        }
         return driver;
     }
     /**
@@ -106,12 +108,12 @@ public class CarDAO {
      */
     public static Cargo createCargo(int quality, int weightIn, int weightOut, String dischargingPlace, Date dischargeDate, String loadingPlace, Date loadingDate){
         Cargo cargo=new Cargo(quality, weightIn, weightOut, dischargingPlace, dischargeDate, loadingPlace, loadingDate);
-        Session session=HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Long id=(Long)session.save(cargo);
-        cargo.setCargoId(id);
-	session.getTransaction().commit();
-	session.close();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            Long id=(Long)session.save(cargo);
+            cargo.setCargoId(id);
+            session.getTransaction().commit();
+        }
         return cargo;
     }
     /**
@@ -121,25 +123,27 @@ public class CarDAO {
      */
     public static Cargo createCargo(){
         Cargo cargo=new Cargo();
-        Session session=HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Long id=(Long)session.save(cargo);
-        cargo.setCargoId(id);
-	session.getTransaction().commit();
-	session.close();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            Long id=(Long)session.save(cargo);
+            cargo.setCargoId(id);
+            session.getTransaction().commit();
+        }
         return cargo;
     }
     /**
      * get Cargo object from DB using Hibernate
      * 
+     * @param id Long - identifier of entity object
      * @return Cargo object
      */
     public static Cargo getCargo(Long id){
-        Session session=HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Cargo cargo=(Cargo)session.get( Cargo.class, id );
-	session.getTransaction().commit();
-	session.close();
+        Cargo cargo;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            cargo = (Cargo)session.get( Cargo.class, id );
+            session.getTransaction().commit();
+        }
         return cargo;
     }
     /**
@@ -148,11 +152,11 @@ public class CarDAO {
      * @param cargo Cargo - cargo object to delete
      */
     public static void deleteCargo(Cargo cargo){
-        Session session=HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.delete(cargo);
-	session.getTransaction().commit();
-	session.close();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.delete(cargo);
+            session.getTransaction().commit();
+        }
     }
      /**
      * create new Car entity using Hibernate
@@ -167,12 +171,12 @@ public class CarDAO {
     public static Car createCar(Cargo cargo, Driver driver, String firstNumber, String secondNumber, String destination){
         Car car=new Car(cargo, driver, destination, firstNumber, secondNumber);
         car.setCreateDate(new Date());
-        Session session=HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Long id=(Long)session.save(car);
-        car.setCarId(id);
-	session.getTransaction().commit();
-	session.close();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            Long id=(Long)session.save(car);
+            car.setCarId(id);
+            session.getTransaction().commit();
+        }
         return car;
     }
      /**
@@ -182,12 +186,12 @@ public class CarDAO {
      */
     public static Car createCar(){
         Car car=new Car();
-        Session session=HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Long id=(Long)session.save(car);
-        car.setCarId(id);
-	session.getTransaction().commit();
-	session.close();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            Long id=(Long)session.save(car);
+            car.setCarId(id);
+            session.getTransaction().commit();
+        }
         return car;
     }
     /**
@@ -196,11 +200,12 @@ public class CarDAO {
      * @return Car object
      */
     public static Car getCar(Long id){
-        Session session=HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Car car=(Car)session.get( Car.class, id );
-	session.getTransaction().commit();
-	session.close();
+        Car car;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            car = (Car)session.get( Car.class, id );
+            session.getTransaction().commit();
+        }
         return car;
     }
     /**
@@ -212,19 +217,19 @@ public class CarDAO {
      */
     public static List<Car> getCars(Date startDate, Date endDate){
         List<Car> cars = new ArrayList<>();
-        Session session=HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Criteria criteria = session.createCriteria(Car.class);
-        if(startDate != null) {
-            criteria.add(Restrictions.ge("createDate", startDate));
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            Criteria criteria = session.createCriteria(Car.class);
+            if(startDate != null) {
+                criteria.add(Restrictions.ge("createDate", startDate));
+            }
+            if(endDate != null) {
+                criteria.add(Restrictions.le("createDate", endDate));
+            }
+            criteria.addOrder(Order.asc("createDate"));
+            cars=criteria.list();
+            session.getTransaction().commit();
         }
-        if(endDate != null) {
-            criteria.add(Restrictions.le("createDate", endDate));
-        }
-        criteria.addOrder(Order.asc("createDate"));
-        cars=criteria.list();
-	session.getTransaction().commit();
-	session.close();
         return cars;
     }
     /**
@@ -233,10 +238,10 @@ public class CarDAO {
      * @param car Car - car object to delete
      */
     public static void deleteCar(Car car){
-        Session session=HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.delete(car);
-	session.getTransaction().commit();
-	session.close();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.delete(car);
+            session.getTransaction().commit();
+        }
     }
 }
