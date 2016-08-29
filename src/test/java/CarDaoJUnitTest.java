@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 import com.avectis.transportcontrol.DAO.CarDAO;
+import com.avectis.transportcontrol.DAO.CardDAO;
 import com.avectis.transportcontrol.entity.Car;
+import com.avectis.transportcontrol.entity.Card;
 import com.avectis.transportcontrol.entity.Cargo;
 import com.avectis.transportcontrol.entity.Driver;
 import java.util.Date;
@@ -115,5 +117,5 @@ public class CarDaoJUnitTest {
             e.printStackTrace();
             fail();
         }
-    }    
+    } 
 }

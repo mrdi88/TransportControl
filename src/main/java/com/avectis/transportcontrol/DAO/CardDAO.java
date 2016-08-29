@@ -87,7 +87,7 @@ public class CardDAO {
      * 
      * @return List of Card objects
      */
-    public static List<Card> getCars(){
+    public static List<Card> getCards(){
         List<Card> cards = new ArrayList<>();
         Session session=HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
