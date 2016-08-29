@@ -14,6 +14,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -121,6 +122,25 @@ public class TransportQueueDAO {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             tq = (TransportQueue)session.get( TransportQueue.class, id );
+            if (tq!=null) Hibernate.initialize(tq.getqElements());
+            session.getTransaction().commit();
+        }
+        return tq;
+    }
+    /**
+     * get TransportQueue object from DB using Hibernate
+     * 
+     * @param name String - name of TransportQueue
+     * @return TransportQueue object
+     */
+    public static TransportQueue getQueueByName(String name){
+        TransportQueue tq=null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            Criteria criteria = session.createCriteria(TransportQueue.class);
+            criteria.add( Restrictions.like("name", name));
+            List<TransportQueue> l=criteria.list();
+            if (l!=null) tq=l.get(0);
             if (tq!=null) Hibernate.initialize(tq.getqElements());
             session.getTransaction().commit();
         }

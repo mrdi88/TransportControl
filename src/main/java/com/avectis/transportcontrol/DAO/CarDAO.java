@@ -170,7 +170,6 @@ public class CarDAO {
      */
     public static Car createCar(Cargo cargo, Driver driver, String firstNumber, String secondNumber, String destination){
         Car car=new Car(cargo, driver, destination, firstNumber, secondNumber);
-        car.setCreateDate(new Date());
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             Long id=(Long)session.save(car);
@@ -186,6 +185,9 @@ public class CarDAO {
      */
     public static Car createCar(){
         Car car=new Car();
+        Date dt=new Date();
+        dt.setTime(dt.getTime()-dt.getTime()%1000);
+        car.setCreateDate(dt);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             Long id=(Long)session.save(car);

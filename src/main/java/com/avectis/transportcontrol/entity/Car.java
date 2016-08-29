@@ -100,6 +100,7 @@ public class Car {
         this.carId = carId;
     }
     public Car() {
+        
     }
 
     public Car(Cargo cargo, Driver driver, String destination, String firstNumber, String secondNumber) {

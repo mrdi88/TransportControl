@@ -79,6 +79,7 @@ public class Card {
         this.cardId = cardId;
     }
     public Card() {
+        
     }
 
     public Card(Car car, long cardNumber, int state, int accessLevel) {

@@ -9,6 +9,7 @@ import com.avectis.transportcontrol.entity.Car;
 import com.avectis.transportcontrol.entity.Card;
 import com.avectis.transportcontrol.util.HibernateUtil;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -37,6 +38,9 @@ public class CardDAO {
      */
     public static Card createCard(){
         Card card=new Card();
+        Date dt=new Date();
+        dt.setTime(dt.getTime()-dt.getTime()%1000);
+        card.setCreateDate(dt);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             Long id=(Long)session.save(card);
@@ -54,7 +58,7 @@ public class CardDAO {
      * @param state int - aditional parameter
      * @return created Card entity
      */
-    public static Card createDriver(Car car, long cardNumber, int accessLevel, int state){
+    public static Card createCard(Car car, long cardNumber, int accessLevel, int state){
         Card card=new Card(car, cardNumber, state, accessLevel);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
