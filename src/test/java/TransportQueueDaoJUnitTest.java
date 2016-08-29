@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import com.avectis.transportcontrol.DAO.TransportQueueDAO;
-import com.avectis.transportcontrol.entity.TransportQueue;
-import com.avectis.transportcontrol.entity.TransportQueueElement;
+import com.avectis.transportcontrol.DAO.DAO;
+import com.avectis.transportcontrol.DAO.QueueHibernateDAO;
+import com.avectis.transportcontrol.entity.Queue;
+import com.avectis.transportcontrol.entity.QueueElement;
 import java.util.List;
 import java.util.TimeZone;
 import org.junit.AfterClass;
@@ -35,48 +36,48 @@ public class TransportQueueDaoJUnitTest {
     public void transportQueue() {
         try{
             //===Queue
-            TransportQueue tq1=TransportQueueDAO.createQueue("R01");
-            TransportQueue tq2=TransportQueueDAO.createQueue("R02");
-            TransportQueue tq3=TransportQueueDAO.createQueue("R03");
-            TransportQueue tq4=TransportQueueDAO.createQueue("R04");
+            Queue tq1=DAO.queueDAO.createQueue("R01");
+            Queue tq2=DAO.queueDAO.createQueue("R02");
+            Queue tq3=DAO.queueDAO.createQueue("R03");
+            Queue tq4=DAO.queueDAO.createQueue("R04");
             //===Elements
-            TransportQueueElement elem1=TransportQueueDAO.createQueueElement();
-            TransportQueueElement elem2=TransportQueueDAO.createQueueElement();
-            TransportQueueElement elem3=TransportQueueDAO.createQueueElement();
+            QueueElement elem1=DAO.queueDAO.createQueueElement();
+            QueueElement elem2=DAO.queueDAO.createQueueElement();
+            QueueElement elem3=DAO.queueDAO.createQueueElement();
             //===
             tq1.getqElements().add(elem1);
             tq1.getqElements().add(elem2);
             tq1.getqElements().add(elem3);
-            TransportQueueDAO.Update(tq1);
+            DAO.queueDAO.Update(tq1);
             //===
-            TransportQueueElement elem4=new TransportQueueElement();
+            QueueElement elem4=new QueueElement();
             tq2.getqElements().add(elem4);
-            tq2.getqElements().add(new TransportQueueElement());
-            TransportQueueDAO.Update(tq2);
+            tq2.getqElements().add(new QueueElement());
+            DAO.queueDAO.Update(tq2);
             //=get
-            List<TransportQueue> list=TransportQueueDAO.getQueueList();
-            for(TransportQueue tq:list){
+            List<Queue> list=DAO.queueDAO.getQueueList();
+            for(Queue tq:list){
                 System.out.println("queue name: " + tq.getName());
             }
             System.out.println("list size: " + list.size());
             System.out.println("TransportQueue list: " + list);
             //asserts
             System.out.println("tq1: " + tq1);
-            System.out.println("tD1: " + TransportQueueDAO.getQueue(tq1.getQueueId()));
-            assertEquals(tq1, TransportQueueDAO.getQueue(tq1.getQueueId()));
-            assertEquals(tq2, TransportQueueDAO.getQueue(tq2.getQueueId()));
-            assertEquals(tq3, TransportQueueDAO.getQueue(tq3.getQueueId()));
-            assertEquals(tq4, TransportQueueDAO.getQueue(tq4.getQueueId()));
+            System.out.println("tD1: " + DAO.queueDAO.getQueue(tq1.getId()));
+            assertEquals(tq1, DAO.queueDAO.getQueue(tq1.getId()));
+            assertEquals(tq2, DAO.queueDAO.getQueue(tq2.getId()));
+            assertEquals(tq3, DAO.queueDAO.getQueue(tq3.getId()));
+            assertEquals(tq4, DAO.queueDAO.getQueue(tq4.getId()));
             //delete
-            TransportQueueDAO.deleteQueue(tq1);
-            TransportQueueDAO.deleteQueue(tq2);
-            TransportQueueDAO.deleteQueue(tq3);
-            TransportQueueDAO.deleteQueue(tq4);
+            DAO.queueDAO.deleteQueue(tq1);
+            DAO.queueDAO.deleteQueue(tq2);
+            DAO.queueDAO.deleteQueue(tq3);
+            DAO.queueDAO.deleteQueue(tq4);
             //asserts
-            assertEquals(null, TransportQueueDAO.getQueue(tq1.getQueueId()));
-            assertEquals(null, TransportQueueDAO.getQueue(tq2.getQueueId()));
-            assertEquals(null, TransportQueueDAO.getQueue(tq3.getQueueId()));
-            assertEquals(null, TransportQueueDAO.getQueue(tq4.getQueueId()));
+            assertEquals(null, DAO.queueDAO.getQueue(tq1.getId()));
+            assertEquals(null, DAO.queueDAO.getQueue(tq2.getId()));
+            assertEquals(null, DAO.queueDAO.getQueue(tq3.getId()));
+            assertEquals(null, DAO.queueDAO.getQueue(tq4.getId()));
         }
         catch(Exception e){
             System.out.println("TransportQueue ex: " + e);

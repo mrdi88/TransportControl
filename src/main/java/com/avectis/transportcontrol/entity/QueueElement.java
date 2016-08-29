@@ -21,11 +21,11 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity
 @Table(name="queues_elements")
-public class TransportQueueElement {
+public class QueueElement {
     @Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment",strategy="increment")
-    private long qElementId;
+    private long id;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cardId")
     private Card card;
@@ -36,22 +36,22 @@ public class TransportQueueElement {
     public void setCard(Card card) {
         this.card = card;
     }
-    public long getqElementId() {
-        return qElementId;
+    public long getId() {
+        return id;
     }
-    public void setqElementId(long qElementId) {
-        this.qElementId = qElementId;
+    public void setId(long id) {
+        this.id = id;
     }
-    public TransportQueueElement() {
+    public QueueElement() {
     }
 
-    public TransportQueueElement(Card card) {
+    public QueueElement(Card card) {
         this.card = card;
     }
 
     @Override
     public String toString() {
-        return "TransportQueueElement{" + "qElementId=" + qElementId + ", card=" + card + '}';
+        return "TransportQueueElement{" + "qElementId=" + id + ", card=" + card + '}';
     }
 
     @Override
@@ -68,8 +68,8 @@ public class TransportQueueElement {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final TransportQueueElement other = (TransportQueueElement) obj;
-        if (this.qElementId != other.qElementId) {
+        final QueueElement other = (QueueElement) obj;
+        if (this.id != other.id) {
             return false;
         }
         if (!Objects.equals(this.card, other.card)) {

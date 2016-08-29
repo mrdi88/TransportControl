@@ -23,17 +23,17 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity
 @Table(name="queues")
-public class TransportQueue {
+public class Queue {
     @Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment",strategy="increment")
-    private long queueId;
+    private long id;
     private String name;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderColumn(name="order_id")
-    private List<TransportQueueElement> queueElements=new ArrayList<>();
+    private List<QueueElement> queueElements=new ArrayList<>();
     
-    public List<TransportQueueElement> getqElements() {
+    public List<QueueElement> getqElements() {
         return queueElements;
     }
     public void setqElements(List qElements) {
@@ -45,23 +45,23 @@ public class TransportQueue {
     public void setName(String name) {
         this.name = name;
     }
-    public long getQueueId() {
-        return queueId;
+    public long getId() {
+        return id;
     }
-    public void setQueueId(long queueId) {
-        this.queueId = queueId;
+    public void setId(long id) {
+        this.id = id;
     }
-    public TransportQueue() {
+    public Queue() {
     }
 
-    public TransportQueue(String name, List<TransportQueueElement> qElements) {
+    public Queue(String name, List<QueueElement> qElements) {
         this.name = name;
         this.queueElements = qElements;
     }
 
     @Override
     public String toString() {
-        return "TransportQueue{" + "queueId=" + queueId + ", name=" + name + ", qElements=" + queueElements + '}';
+        return "TransportQueue{" + "queueId=" + id + ", name=" + name + ", qElements=" + queueElements + '}';
     }
 
     @Override
@@ -78,7 +78,7 @@ public class TransportQueue {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final TransportQueue other = (TransportQueue) obj;
+        final Queue other = (Queue) obj;
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }

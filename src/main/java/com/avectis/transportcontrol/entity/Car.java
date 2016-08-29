@@ -29,7 +29,7 @@ public class Car {
     @Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment",strategy="increment")
-    private long carId;
+    private long id;
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "cargoId")
     private Cargo cargo;
@@ -93,11 +93,11 @@ public class Car {
     public void setCargo(Cargo cargo) {
         this.cargo = cargo;
     }
-    public long getCarId() {
-        return carId;
+    public long getId() {
+        return id;
     }
-    public void setCarId(long carId) {
-        this.carId = carId;
+    public void setId(long carId) {
+        this.id = carId;
     }
     public Car() {
         
@@ -116,13 +116,13 @@ public class Car {
 
     @Override
     public String toString() {
-        return "Car{" + "carId=" + carId + ", cargo=" + cargo + ", driver=" + driver + ", destination=" + destination + ", firstNumber=" + firstNumber + ", secondNumber=" + secondNumber + ", createDate=" + createDate + ", leaveDate=" + leaveDate + '}';
+        return "Car{" + "carId=" + id + ", cargo=" + cargo + ", driver=" + driver + ", destination=" + destination + ", firstNumber=" + firstNumber + ", secondNumber=" + secondNumber + ", createDate=" + createDate + ", leaveDate=" + leaveDate + '}';
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67 * hash + (int) (this.carId ^ (this.carId >>> 32));
+        hash = 67 * hash + (int) (this.id ^ (this.id >>> 32));
         hash = 67 * hash + Objects.hashCode(this.cargo);
         hash = 67 * hash + Objects.hashCode(this.driver);
         hash = 67 * hash + Objects.hashCode(this.destination);
@@ -142,7 +142,7 @@ public class Car {
             return false;
         }
         final Car other = (Car) obj;
-        if (this.carId != other.carId) {
+        if (this.id != other.id) {
             return false;
         }
         if (!Objects.equals(this.cargo, other.cargo)) {

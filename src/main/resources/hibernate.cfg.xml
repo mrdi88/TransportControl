@@ -11,7 +11,7 @@
     <mapping class="com.avectis.transportcontrol.entity.Cargo" file="" jar="" package="" resource=""/>
     <mapping class="com.avectis.transportcontrol.entity.Car" file="" jar="" package="" resource=""/>
     <mapping class="com.avectis.transportcontrol.entity.Card" file="" jar="" package="" resource=""/>
-    <mapping class="com.avectis.transportcontrol.entity.TransportQueue"/>
-    <mapping class="com.avectis.transportcontrol.entity.TransportQueueElement"/>
+    <mapping class="com.avectis.transportcontrol.entity.Queue" file="" jar="" package="" resource=""/>
+    <mapping class="com.avectis.transportcontrol.entity.QueueElement" file="" jar="" package="" resource=""/>
   </session-factory>
 </hibernate-configuration>

@@ -7,8 +7,8 @@ import com.avectis.transportcontrol.entity.Car;
 import com.avectis.transportcontrol.entity.Card;
 import com.avectis.transportcontrol.entity.Cargo;
 import com.avectis.transportcontrol.entity.Driver;
-import com.avectis.transportcontrol.entity.TransportQueue;
-import com.avectis.transportcontrol.entity.TransportQueueElement;
+import com.avectis.transportcontrol.entity.Queue;
+import com.avectis.transportcontrol.entity.QueueElement;
 import java.util.Date;
 import java.util.TimeZone;
 import org.hibernate.Session;
@@ -304,9 +304,9 @@ public class EntityJUnitTest {
             car.setFirstNumber("4700-EM1");
             car.setSecondNumber("4800-EM1");
             Card card=new Card(car,23423L,0,1);
-            TransportQueueElement qe=new TransportQueueElement();
+            QueueElement qe=new QueueElement();
             qe.setCard(card);
-            TransportQueue tq=new TransportQueue();
+            Queue tq=new Queue();
             tq.setName("r01");
             tq.getqElements().add(qe);
             //save
@@ -318,11 +318,11 @@ public class EntityJUnitTest {
             session.getTransaction().commit();
             session.close();
             //get and add
-            TransportQueueElement qe2=new TransportQueueElement();
-            TransportQueueElement qe3=new TransportQueueElement();
+            QueueElement qe2=new QueueElement();
+            QueueElement qe3=new QueueElement();
             session = sessionFactory.openSession();
             session.beginTransaction();
-            tq=session.get(TransportQueue.class,tq_id);
+            tq=session.get(Queue.class,tq_id);
             tq.getqElements().add(qe2);
             tq.getqElements().add(qe3);
             session.getTransaction().commit();
@@ -330,7 +330,7 @@ public class EntityJUnitTest {
             // read
             session = sessionFactory.openSession();
             session.beginTransaction();
-            tq=session.get(TransportQueue.class,tq_id);
+            tq=session.get(Queue.class,tq_id);
             System.out.println("red: " + tq);
             session.getTransaction().commit();
             session.close();
@@ -338,7 +338,7 @@ public class EntityJUnitTest {
             //delete tg and car,card
             session = sessionFactory.openSession();
             session.beginTransaction();
-            tq=session.get(TransportQueue.class,tq_id);
+            tq=session.get(Queue.class,tq_id);
             card=session.get(Card.class,card_id);
             car=session.get(Car.class,car_id);
             session.delete(tq);
@@ -349,7 +349,7 @@ public class EntityJUnitTest {
             //check if deleted tq and car,card
             session = sessionFactory.openSession();
             session.beginTransaction();
-            tq=session.get(TransportQueue.class,tq_id);
+            tq=session.get(Queue.class,tq_id);
             card=session.get(Card.class,card_id);
             car=session.get(Car.class,car_id);
             session.getTransaction().commit();

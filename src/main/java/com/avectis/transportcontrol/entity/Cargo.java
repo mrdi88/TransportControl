@@ -25,7 +25,7 @@ public class Cargo {
     @Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment",strategy="increment")
-    private long cargoId;
+    private long id;
     private int quality;
     private int weightIn;
     private int weightOut;
@@ -84,11 +84,11 @@ public class Cargo {
     public void setQuality(int quality) {
         this.quality = quality;
     }
-    public long getCargoId() {
-        return cargoId;
+    public long getId() {
+        return id;
     }
-    public void setCargoId(long cargoId) {
-        this.cargoId = cargoId;
+    public void setId(long id) {
+        this.id = id;
     }
     
     public Cargo() {
@@ -112,13 +112,13 @@ public class Cargo {
 
     @Override
     public String toString() {
-        return "Cargo{" + "cargoId=" + cargoId + ", quality=" + quality + ", weightIn=" + weightIn + ", weightOut=" + weightOut + ", dischargingPlace=" + dischargingPlace + ", dischargeDate=" + dischargeDate + ", loadingPlace=" + loadingPlace + ", loadingDate=" + loadingDate + '}';
+        return "Cargo{" + "cargoId=" + id + ", quality=" + quality + ", weightIn=" + weightIn + ", weightOut=" + weightOut + ", dischargingPlace=" + dischargingPlace + ", dischargeDate=" + dischargeDate + ", loadingPlace=" + loadingPlace + ", loadingDate=" + loadingDate + '}';
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 37 * hash + (int) (this.cargoId ^ (this.cargoId >>> 32));
+        hash = 37 * hash + (int) (this.id ^ (this.id >>> 32));
         hash = 37 * hash + this.quality;
         hash = 37 * hash + this.weightIn;
         hash = 37 * hash + this.weightOut;
@@ -138,7 +138,7 @@ public class Cargo {
             return false;
         }
         final Cargo other = (Cargo) obj;
-        if (this.cargoId != other.cargoId) {
+        if (this.id != other.id) {
             return false;
         }
         if (this.quality != other.quality) {

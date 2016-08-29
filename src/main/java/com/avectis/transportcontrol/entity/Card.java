@@ -29,7 +29,7 @@ public class Card {
     @Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment",strategy="increment")
-    private long cardId;
+    private long id;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "carId")
     private Car car;
@@ -72,11 +72,11 @@ public class Card {
     public void setCar(Car car) {
         this.car = car;
     }
-    public long getCardId() {
-        return cardId;
+    public long getId() {
+        return id;
     }
-    public void setCardId(long cardId) {
-        this.cardId = cardId;
+    public void setId(long cardId) {
+        this.id = cardId;
     }
     public Card() {
         
@@ -94,7 +94,7 @@ public class Card {
 
     @Override
     public String toString() {
-        return "Card{" + "cardId=" + cardId + ", car=" + car + ", cardNumber=" + cardNumber + ", state=" + state + ", accessLevel=" + accessLevel + ", createDate=" + createDate + '}';
+        return "Card{" + "cardId=" + id + ", car=" + car + ", cardNumber=" + cardNumber + ", state=" + state + ", accessLevel=" + accessLevel + ", createDate=" + createDate + '}';
     }
 
     @Override

@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import com.avectis.transportcontrol.DAO.CarDAO;
-import com.avectis.transportcontrol.DAO.CardDAO;
+import com.avectis.transportcontrol.DAO.DAO;
 import com.avectis.transportcontrol.entity.Car;
-import com.avectis.transportcontrol.entity.Card;
 import com.avectis.transportcontrol.entity.Cargo;
 import com.avectis.transportcontrol.entity.Driver;
 import java.util.Date;
@@ -40,15 +38,15 @@ public class CarDaoJUnitTest {
         try{
             //===Driver
             //greate Driver
-            Driver driver = CarDAO.createDriver("Frank", "+375296488772", "OOO Gerimi1");
+            Driver driver = DAO.carDAO.createDriver("Frank", "+375296488772", "OOO Gerimi1");
             System.out.println("created driver: " + driver);
             assertNotNull(driver);
             //get and check
-            Driver driver_temp = CarDAO.getDriver(driver.getDriverId());
+            Driver driver_temp = DAO.carDAO.getDriver(driver.getId());
             assertEquals(driver,driver_temp);
             //delete drivers and check
-            CarDAO.deleteDriver(driver);
-            driver = CarDAO.getDriver(driver.getDriverId());
+            DAO.carDAO.deleteDriver(driver);
+            driver = DAO.carDAO.getDriver(driver.getId());
             assertEquals(driver,null);
         }
         catch(Exception e){
@@ -60,15 +58,15 @@ public class CarDaoJUnitTest {
     public void cargo() {
         try{
             //create Cargo
-            Cargo cargo=CarDAO.createCargo(4, 4000, 0, null, null, null, null);
+            Cargo cargo=DAO.carDAO.createCargo(4, 4000, 0, null, null, null, null);
             System.out.println("created cargo: " + cargo);
             assertNotNull(cargo);
             //get and check
-            Cargo cargo_temp=CarDAO.getCargo(cargo.getCargoId());
+            Cargo cargo_temp=DAO.carDAO.getCargo(cargo.getId());
             assertEquals(cargo,cargo_temp);
             //delete cargo and check
-            CarDAO.deleteCargo(cargo);
-            cargo=CarDAO.getCargo(cargo.getCargoId());
+            DAO.carDAO.deleteCargo(cargo);
+            cargo=DAO.carDAO.getCargo(cargo.getId());
             assertEquals(cargo,null);
         }
         catch(Exception e){
@@ -80,36 +78,36 @@ public class CarDaoJUnitTest {
     public void car() {
         try{
             //===Car
-            Driver driver=CarDAO.createDriver("Dunkan Maklaud", "+375295023336", "OAO Shilda");
-            Cargo cargo=CarDAO.createCargo();
+            Driver driver=DAO.carDAO.createDriver("Dunkan Maklaud", "+375295023336", "OAO Shilda");
+            Cargo cargo=DAO.carDAO.createCargo();
             cargo.setWeightIn(3000);
             cargo.setQuality(3);
-            CarDAO.Update(cargo);
-            Car car=CarDAO.createCar(cargo, driver, "4755-KK7", "7777-KT7", null);
+            DAO.carDAO.Update(cargo);
+            Car car=DAO.carDAO.createCar(cargo, driver, "4755-KK7", "7777-KT7", null);
             System.out.println("cr  car: " + car);
             assertNotNull(car);
             //get car and check
-            Car car_temp=CarDAO.getCar(car.getCarId());
+            Car car_temp=DAO.carDAO.getCar(car.getId());
             System.out.println("get car: " + car_temp);
             assertEquals(car,car_temp);
             //try list
-            Driver driver2=CarDAO.createDriver("Dunkan Maklaud", "+375295023336", "OAO Shilda");
-            Cargo cargo2=CarDAO.createCargo();
+            Driver driver2=DAO.carDAO.createDriver("Dunkan Maklaud", "+375295023336", "OAO Shilda");
+            Cargo cargo2=DAO.carDAO.createCargo();
             cargo2.setWeightIn(3000);
             cargo2.setQuality(3);
-            CarDAO.Update(cargo2);
-            Car car2=CarDAO.createCar(cargo2, driver2, "4755-KK7", "7777-KT7", null);
+            DAO.carDAO.Update(cargo2);
+            Car car2=DAO.carDAO.createCar(cargo2, driver2, "4755-KK7", "7777-KT7", null);
             Date dt=new Date();
             dt.setHours(2);
             car2.setCreateDate(dt);
-            CarDAO.Update(car2);
-            List<Car> cars=CarDAO.getCars(new Date(), null);
+            DAO.carDAO.Update(car2);
+            List<Car> cars=DAO.carDAO.getCars(new Date(), null);
             
             System.out.println("Cars List: "+cars);
             //delete car
-            CarDAO.deleteCar(car);
-            CarDAO.deleteCar(car2);
-            car=CarDAO.getCar(car.getCarId());
+            DAO.carDAO.deleteCar(car);
+            DAO.carDAO.deleteCar(car2);
+            car=DAO.carDAO.getCar(car.getId());
             assertEquals(car,null);
         }
         catch(Exception e){

@@ -6,8 +6,8 @@
 package com.avectis.transportcontrol.DAO;
 
 import com.avectis.transportcontrol.entity.Card;
-import com.avectis.transportcontrol.entity.TransportQueue;
-import com.avectis.transportcontrol.entity.TransportQueueElement;
+import com.avectis.transportcontrol.entity.Queue;
+import com.avectis.transportcontrol.entity.QueueElement;
 import com.avectis.transportcontrol.util.HibernateUtil;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +20,14 @@ import org.hibernate.criterion.Restrictions;
  *
  * @author DPoplauski
  */
-public class TransportQueueDAO {
+public class QueueHibernateDAO implements QueueDAO{
     /**
      * unpade entity using Hibernate
      * 
      * @param object Object - witch entity to update
      */
-    public static void Update(Object object){
+    @Override
+    public void Update(Object object){
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             session.update(object);
@@ -34,33 +35,35 @@ public class TransportQueueDAO {
         }
     }
     /**
-     * create new not initialied TransportQueue entity using Hibernate
+     * create new not initialied Queue entity using Hibernate
      * 
-     * @return created TransportQueue entity
+     * @return created Queue entity
      */
-    public static TransportQueue createQueue(){
-        TransportQueue transportQueue=new TransportQueue();
+    @Override
+    public Queue createQueue(){
+        Queue transportQueue=new Queue();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             Long id=(Long)session.save(transportQueue);
-            transportQueue.setQueueId(id);
+            transportQueue.setId(id);
             session.getTransaction().commit();
         }
         return transportQueue;
     }
     /**
-     * create new not initialied TransportQueue entity using Hibernate
+     * create new not initialied Queue entity using Hibernate
      * 
      * @param name String - queue name
-     * @return created TransportQueue entity
+     * @return created Queue entity
      */
-    public static TransportQueue createQueue(String name){
-        TransportQueue transportQueue=new TransportQueue();
+    @Override
+    public Queue createQueue(String name){
+        Queue transportQueue=new Queue();
         transportQueue.setName(name);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             Long id=(Long)session.save(transportQueue);
-            transportQueue.setQueueId(id);
+            transportQueue.setId(id);
             session.getTransaction().commit();
         }
         return transportQueue;
@@ -68,14 +71,15 @@ public class TransportQueueDAO {
     /**
      * create new Card entity using Hibernate
      * 
-     * @return created TransportQueueElement entity
+     * @return created QueueElement entity
      */
-    public static TransportQueueElement createQueueElement(){
-        TransportQueueElement tqElement=new TransportQueueElement();
+    @Override
+    public QueueElement createQueueElement(){
+        QueueElement tqElement=new QueueElement();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             Long id=(Long)session.save(tqElement);
-            tqElement.setqElementId(id);
+            tqElement.setId(id);
             session.getTransaction().commit();
         }
         return tqElement;
@@ -84,62 +88,66 @@ public class TransportQueueDAO {
      * create new Card entity using Hibernate
      * 
      * @param card Card - card to put into queue
-     * @return created TransportQueueElement entity
+     * @return created QueueElement entity
      */
-    public static TransportQueueElement createQueueElement(Card card){
-        TransportQueueElement tqElement=new TransportQueueElement(card);
+    @Override
+    public QueueElement createQueueElement(Card card){
+        QueueElement tqElement=new QueueElement(card);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             Long id=(Long)session.save(tqElement);
-            tqElement.setqElementId(id);
+            tqElement.setId(id);
             session.getTransaction().commit();
         }
         return tqElement;
     }
     /**
-     * get TransportQueueElement object from DB using Hibernate
+     * get QueueElement object from DB using Hibernate
      * 
      * @param id Long - identifier of entity object
-     * @return TransportQueueElement object
+     * @return QueueElement object
      */
-    public static TransportQueueElement getQueueElement(Long id){
-        TransportQueueElement tqElement;
+    @Override
+    public QueueElement getQueueElement(Long id){
+        QueueElement tqElement;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            tqElement = (TransportQueueElement)session.get( TransportQueueElement.class, id );
+            tqElement = (QueueElement)session.get(QueueElement.class, id );
             session.getTransaction().commit();
         }
         return tqElement;
     }
     /**
-     * get TransportQueue object from DB using Hibernate
+     * get Queue object from DB using Hibernate
      * 
      * @param id Long - identifier of entity object
-     * @return TransportQueue object
+     * @return Queue object
      */
-    public static TransportQueue getQueue(Long id){
-        TransportQueue tq;
+    @Override
+    public Queue getQueue(Long id){
+        Queue tq;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            tq = (TransportQueue)session.get( TransportQueue.class, id );
+            tq = (Queue)session.get(Queue.class, id );
             if (tq!=null) Hibernate.initialize(tq.getqElements());
             session.getTransaction().commit();
         }
         return tq;
     }
     /**
-     * get TransportQueue object from DB using Hibernate
+     * get Queue object from DB using Hibernate
      * 
-     * @param name String - name of TransportQueue
-     * @return TransportQueue object
+     * @param name String - name of Queue
+     * @return Queue object
      */
-    public static TransportQueue getQueueByName(String name){
-        TransportQueue tq=null;
+    @Override
+    public Queue getQueueByName(String name){
+        Queue tq=null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            Criteria criteria = session.createCriteria(TransportQueue.class);
+            Criteria criteria = session.createCriteria(Queue.class);
             criteria.add( Restrictions.like("name", name));
-            List<TransportQueue> l=criteria.list();
+            List<Queue> l=criteria.list();
             if (l!=null) tq=l.get(0);
             if (tq!=null) Hibernate.initialize(tq.getqElements());
             session.getTransaction().commit();
@@ -147,17 +155,18 @@ public class TransportQueueDAO {
         return tq;
     }
     /**
-     * get all TransportQueue from Queue using Hibernate
+     * get all Queue from Queue using Hibernate
      * 
-     * @return List of TransportQueue objects
+     * @return List of Queue objects
      */
-    public static List<TransportQueue> getQueueList(){
-        List<TransportQueue> tqList = new ArrayList<>();
+    @Override
+    public List<Queue> getQueueList(){
+        List<Queue> tqList = new ArrayList<>();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            Criteria criteria = session.createCriteria(TransportQueue.class);
+            Criteria criteria = session.createCriteria(Queue.class);
             tqList=criteria.list();
-            for(TransportQueue tq:tqList){
+            for(Queue tq:tqList){
                 Hibernate.initialize(tq.getqElements());
             }
             session.getTransaction().commit();
@@ -165,11 +174,12 @@ public class TransportQueueDAO {
         return tqList;
     }
     /**
-     * delete TransportQueue object from DB using Hibernate
+     * delete Queue object from DB using Hibernate
      * 
-     * @param tq TransportQueue - TransportQueue object to delete
+     * @param tq Queue - Queue object to delete
      */
-    public static void deleteQueue(TransportQueue tq){
+    @Override
+    public void deleteQueue(Queue tq){
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             session.delete(tq);
@@ -181,7 +191,8 @@ public class TransportQueueDAO {
      * 
      * @param tqe deleteQueueElement - deleteQueueElement object to delete
      */
-    public static void deleteQueueElement(TransportQueueElement tqe){
+    @Override
+    public void deleteQueueElement(QueueElement tqe){
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             session.delete(tqe);
