@@ -7,11 +7,8 @@ package com.avectis.transportcontrol.entity;
 
 import java.util.Objects;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -25,7 +22,7 @@ public class Driver {
     @Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy="increment")
-    private long driverId;
+    private long id;
     private String name;
     private String mobileNumber;
     private String organization;
@@ -53,24 +50,24 @@ public class Driver {
     public void setName(String name) {
         this.name = name;
     }
-    public long getDriverId() {
-        return driverId;
+    public long getId() {
+        return id;
     }
-    public void setDriverId(long driverId) {
-        this.driverId = driverId;
+    public void setId(long driverId) {
+        this.id = driverId;
     }
     public Driver() {
     }
 
     @Override
     public String toString() {
-        return "Driver{" + "driverId=" + driverId + ", name=" + name + ", mobileNumber=" + mobileNumber + ", organization=" + organization + '}';
+        return "Driver{" + "driverId=" + id + ", name=" + name + ", mobileNumber=" + mobileNumber + ", organization=" + organization + '}';
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 71 * hash + (int) (this.driverId ^ (this.driverId >>> 32));
+        hash = 71 * hash + (int) (this.id ^ (this.id >>> 32));
         hash = 71 * hash + Objects.hashCode(this.name);
         hash = 71 * hash + Objects.hashCode(this.mobileNumber);
         hash = 71 * hash + Objects.hashCode(this.organization);
@@ -86,7 +83,7 @@ public class Driver {
             return false;
         }
         final Driver other = (Driver) obj;
-        if (this.driverId != other.driverId) {
+        if (this.id != other.id) {
             return false;
         }
         if (!Objects.equals(this.name, other.name)) {
