@@ -4,9 +4,13 @@
  * and open the template in the editor.
  */
 import com.avectis.transportcontrol.entity.Car;
+import com.avectis.transportcontrol.entity.Card;
 import com.avectis.transportcontrol.entity.Cargo;
 import com.avectis.transportcontrol.entity.Driver;
+import com.avectis.transportcontrol.entity.Queue;
+import com.avectis.transportcontrol.entity.QueueElement;
 import java.util.Date;
+import java.util.TimeZone;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -31,7 +35,8 @@ public class EntityJUnitTest {
     
     @BeforeClass
     public static void setUpClass() {
-        System.out.println("tests begins");
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+        System.out.println("entities test begins");
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                         .configure() // configures settings from hibernate.cfg.xml
                         .build();
@@ -48,7 +53,7 @@ public class EntityJUnitTest {
     
     @AfterClass
     public static void tearDownClass() {
-        System.out.println("tests ends");
+        System.out.println("entities test ends");
         if ( sessionFactory != null ) {
 			sessionFactory.close();
 	}
@@ -65,7 +70,7 @@ public class EntityJUnitTest {
     public void testDriver(){
         try {
                 // create a couple of drivers...
-                System.out.println("driver test began");
+                System.out.println("driver test");
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
                 Driver dr1=new Driver( "Dima", "+375292051312","avectis");
@@ -107,7 +112,7 @@ public class EntityJUnitTest {
     public void testCargo(){
         try {
                 // create a couple of drivers...
-                System.out.println("cargo test began");
+                System.out.println("cargo test");
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
                 Cargo cargo1=new Cargo();
@@ -153,7 +158,7 @@ public class EntityJUnitTest {
     public void testCar(){
         try {
                 // create a couple of drivers...
-                System.out.println("car test began");
+                System.out.println("car test");
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
                 Car car1=new Car();
@@ -185,13 +190,11 @@ public class EntityJUnitTest {
                 // is equal
                 assertEquals(car1, car2);
                 //delete car
-                System.out.println("car test began");
 		session = sessionFactory.openSession();
 		session.beginTransaction();
                 session.delete(car1);
                 session.getTransaction().commit();
 		session.close();
-                System.out.println("saved in db: "+car1);
                 //check if deleted
                 session = sessionFactory.openSession();
 		session.beginTransaction();
@@ -209,7 +212,152 @@ public class EntityJUnitTest {
     @Test
     public void testCard(){
         try {
-             System.out.println("End");       
+                System.out.println("card test");
+                Car car=new Car();
+                //driver
+                Driver driver= new Driver( "Dima", "+375292051312","avectis"); 
+                //cargo
+                Cargo cargo=new Cargo();
+                cargo.setWeightIn(5000);
+                cargo.setQuality(5);
+                cargo.setLoadingDate(new Date());
+                //set prop to car
+                car.setDriver(driver);
+                car.setCargo(cargo);
+                car.setFirstNumber("4700-EM1");
+                car.setSecondNumber("4800-EM1");
+                //new card 
+                Card card=new Card(car,23423L,0,1);
+                //save
+                Session session = sessionFactory.openSession();
+		session.beginTransaction();
+                Long car_id=(Long)session.save(car);
+                Long id=(Long)session.save(card);
+                session.getTransaction().commit();
+		session.close();
+                System.out.println("saved in db: "+card);
+                //get 
+                session = sessionFactory.openSession();
+		session.beginTransaction();
+		Card card2=(Card)session.get( Card.class, id );
+                card2.getCar().getDriver().setName("Nikolay");
+		session.getTransaction().commit();
+		session.close();
+		System.out.println("red from db :"+card2);
+                // is equal
+                //assertEquals(card, card2);
+                //delete 
+		session = sessionFactory.openSession();
+		session.beginTransaction();
+                session.delete(card2);
+                session.getTransaction().commit();
+		session.close();
+                //check if deleted
+                session = sessionFactory.openSession();
+		session.beginTransaction();
+		card=(Card)session.get(Card.class,id);
+		session.getTransaction().commit();
+		session.close();
+                assertEquals(card, null);
+                //get car
+                session = sessionFactory.openSession();
+		session.beginTransaction();
+		car=(Car)session.get( Car.class, car_id );
+                assertNotEquals(car, null);
+		session.getTransaction().commit();
+		session.close();
+		System.out.println("red from db :"+card2);
+                //delete car
+		session = sessionFactory.openSession();
+		session.beginTransaction();
+                session.delete(car);
+                session.getTransaction().commit();
+		session.close();
+                //check if deleted
+                session = sessionFactory.openSession();
+		session.beginTransaction();
+		car=(Car)session.get(Car.class,car_id);
+		session.getTransaction().commit();
+		session.close();
+                assertEquals(car, null);
+                System.out.println("End");       
+        }
+        catch(Exception e) {
+            System.out.println("ex: " + e);
+            fail();
+        }
+        System.out.println("End");
+    }
+    @Test
+    public void QueueTest(){
+        try{
+            System.out.println("Queue test");
+            //greate
+            Car car=new Car();
+            Driver driver= new Driver( "Dima", "+375292051312","avectis"); 
+            Cargo cargo=new Cargo();
+            cargo.setWeightIn(5000);
+            cargo.setQuality(5);
+            cargo.setLoadingDate(new Date());
+            car.setDriver(driver);
+            car.setCargo(cargo);
+            car.setFirstNumber("4700-EM1");
+            car.setSecondNumber("4800-EM1");
+            Card card=new Card(car,23423L,0,1);
+            QueueElement qe=new QueueElement();
+            qe.setCard(card);
+            Queue tq=new Queue();
+            tq.setName("r01");
+            tq.getqElements().add(qe);
+            //save
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            Long car_id=(Long)session.save(car);
+            Long card_id=(Long)session.save(card);
+            Long tq_id=(Long)session.save(tq);
+            session.getTransaction().commit();
+            session.close();
+            //get and add
+            QueueElement qe2=new QueueElement();
+            QueueElement qe3=new QueueElement();
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            tq=session.get(Queue.class,tq_id);
+            tq.getqElements().add(qe2);
+            tq.getqElements().add(qe3);
+            session.getTransaction().commit();
+            session.close();
+            // read
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            tq=session.get(Queue.class,tq_id);
+            System.out.println("red: " + tq);
+            session.getTransaction().commit();
+            session.close();
+            assertEquals(tq.getqElements().size(),3);
+            //delete tg and car,card
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            tq=session.get(Queue.class,tq_id);
+            card=session.get(Card.class,card_id);
+            car=session.get(Car.class,car_id);
+            session.delete(tq);
+            session.delete(card);
+            session.delete(car);
+            session.getTransaction().commit();
+            session.close();
+            //check if deleted tq and car,card
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            tq=session.get(Queue.class,tq_id);
+            card=session.get(Card.class,card_id);
+            car=session.get(Car.class,car_id);
+            session.getTransaction().commit();
+            session.close();
+            assertEquals(tq,null);
+            assertEquals(card,null);
+            assertEquals(car,null);
+            
         }
         catch(Exception e) {
             System.out.println("ex: " + e);

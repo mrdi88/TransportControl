@@ -6,6 +6,7 @@
 package com.avectis.transportcontrol.entity;
 
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,7 +29,7 @@ public class Card {
     @Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment",strategy="increment")
-    private long cardId;
+    private long id;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "carId")
     private Car car;
@@ -42,6 +43,9 @@ public class Card {
         return createDate;
     }
     public void setCreateDate(Date createDate) {
+        if (createDate!=null){
+            createDate.setTime(createDate.getTime()-createDate.getTime()%1000);
+        }
         this.createDate = createDate;
     }
     public int getAccessLevel() {
@@ -68,13 +72,14 @@ public class Card {
     public void setCar(Car car) {
         this.car = car;
     }
-    public long getCardId() {
-        return cardId;
+    public long getId() {
+        return id;
     }
-    public void setCardId(long cardId) {
-        this.cardId = cardId;
+    public void setId(long cardId) {
+        this.id = cardId;
     }
     public Card() {
+        
     }
 
     public Card(Car car, long cardNumber, int state, int accessLevel) {
@@ -82,7 +87,47 @@ public class Card {
         this.cardNumber = cardNumber;
         this.state = state;
         this.accessLevel = accessLevel;
-        this.createDate=new Date();
+        Date dt=new Date();
+        dt.setTime(dt.getTime()-dt.getTime()%1000);
+        this.createDate=dt;
+    }
+
+    @Override
+    public String toString() {
+        return "Card{" + "cardId=" + id + ", car=" + car + ", cardNumber=" + cardNumber + ", state=" + state + ", accessLevel=" + accessLevel + ", createDate=" + createDate + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Card other = (Card) obj;
+        if (!Objects.equals(this.car, other.car)) {
+            return false;
+        }
+        if (this.cardNumber != other.cardNumber) {
+            return false;
+        }
+        if (this.state != other.state) {
+            return false;
+        }
+        if (this.accessLevel != other.accessLevel) {
+            return false;
+        }
+        if (!Objects.equals(this.createDate, other.createDate)) {
+                return false;
+        }
+        return true;
     }
     
 }
