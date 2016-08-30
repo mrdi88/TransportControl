@@ -29,7 +29,7 @@ public class Car {
     @Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment",strategy="increment")
-    private long carId;
+    private long id;
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "cargoId")
     private Cargo cargo;
@@ -48,12 +48,19 @@ public class Car {
         return leaveDate;
     }
     public void setLeaveDate(Date leaveDate) {
+        if(leaveDate!=null){
+            leaveDate.setTime(leaveDate.getTime()-leaveDate.getTime()%1000);
+        }
+        
         this.leaveDate = leaveDate;
     }
     public Date getCreateDate() {
         return createDate;
     }
     public void setCreateDate(Date createDate) {
+        if(createDate!=null){
+            createDate.setTime(createDate.getTime()-createDate.getTime()%1000);
+        }
         this.createDate = createDate;
     }
     public String getSecondNumber() {
@@ -86,13 +93,14 @@ public class Car {
     public void setCargo(Cargo cargo) {
         this.cargo = cargo;
     }
-    public long getCarId() {
-        return carId;
+    public long getId() {
+        return id;
     }
-    public void setCarId(long carId) {
-        this.carId = carId;
+    public void setId(long carId) {
+        this.id = carId;
     }
     public Car() {
+        
     }
 
     public Car(Cargo cargo, Driver driver, String destination, String firstNumber, String secondNumber) {
@@ -101,18 +109,20 @@ public class Car {
         this.destination = destination;
         this.firstNumber = firstNumber;
         this.secondNumber = secondNumber;
-        this.createDate = new Date();
+        Date dt=new Date();
+        dt.setTime(dt.getTime()-dt.getTime()%1000);
+        this.createDate = dt;
     }
 
     @Override
     public String toString() {
-        return "Car{" + "carId=" + carId + ", cargo=" + cargo + ", driver=" + driver + ", destination=" + destination + ", firstNumber=" + firstNumber + ", secondNumber=" + secondNumber + ", createDate=" + createDate + ", leaveDate=" + leaveDate + '}';
+        return "Car{" + "carId=" + id + ", cargo=" + cargo + ", driver=" + driver + ", destination=" + destination + ", firstNumber=" + firstNumber + ", secondNumber=" + secondNumber + ", createDate=" + createDate + ", leaveDate=" + leaveDate + '}';
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67 * hash + (int) (this.carId ^ (this.carId >>> 32));
+        hash = 67 * hash + (int) (this.id ^ (this.id >>> 32));
         hash = 67 * hash + Objects.hashCode(this.cargo);
         hash = 67 * hash + Objects.hashCode(this.driver);
         hash = 67 * hash + Objects.hashCode(this.destination);
@@ -132,7 +142,7 @@ public class Car {
             return false;
         }
         final Car other = (Car) obj;
-        if (this.carId != other.carId) {
+        if (this.id != other.id) {
             return false;
         }
         if (!Objects.equals(this.cargo, other.cargo)) {
@@ -150,21 +160,11 @@ public class Car {
         if (!Objects.equals(this.secondNumber, other.secondNumber)) {
             return false;
         }
-        if ((this.createDate==null && other.createDate!=null) || this.createDate!=null && other.createDate==null){
-            return false;
-        }
-        if (this.createDate!=null && other.createDate!=null){
-            if ((!Objects.equals(this.createDate.getTime()/1000, other.createDate.getTime()/1000))) {
+        if ((!Objects.equals(this.createDate, other.createDate))) {
                 return false;
-            }
         }
-        if ((this.leaveDate==null && other.leaveDate!=null) || this.leaveDate!=null && other.leaveDate==null){
-            return false;
-        }
-        if (this.leaveDate!=null && other.leaveDate!=null){
-            if ((!Objects.equals(this.leaveDate.getTime()/1000, other.leaveDate.getTime()/1000))) {
+        if ((!Objects.equals(this.leaveDate, other.leaveDate))) {
                 return false;
-            }
         }
         return true;
     }
