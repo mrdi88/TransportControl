@@ -5,7 +5,7 @@ package com.avectis.transportcontrol.control.barrier;
  */
 public class Barrier {
 
-    private String   name;
+    public String   name;
     private boolean  state;
     private BarrierAdapter barrierAdapter;
 
