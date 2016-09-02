@@ -5,7 +5,6 @@
  */
 package com.avectis.transportcontrol.DAO;
 
-import com.avectis.transportcontrol.entity.Car;
 import com.avectis.transportcontrol.entity.Card;
 import java.util.List;
 
@@ -14,10 +13,8 @@ import java.util.List;
  * @author DPoplauski
  */
 public interface CardDAO {
-
-    public void Update(Object object);
-    public Card createCard();
-    public Card createCard(Car car, long cardNumber, int accessLevel, int state);
+    public Long addCard(Card card);
+    public void Update(Card card);
     public Card getCard(Long id);
     public List<Card> getCards();
     public void deleteCard(Card card);

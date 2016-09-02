@@ -3,37 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.avectis.transportcontrol.entity;
+package com.avectis.transportcontrol.view;
 
+import com.avectis.transportcontrol.entity.Cargo;
 import java.util.Date;
 import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
- * @author DPoplauski
+ * @author Dima
  */
-@Entity
-@Table(name="cargos")
-public class Cargo {
-    @Id
-    @GeneratedValue(generator="increment")
-    @GenericGenerator(name="increment",strategy="increment")
+public class CargoView {
+
     private long id;
     private int quality;
     private int weightIn;
     private int weightOut;
     private String dischargingPlace;
-    @Temporal(TemporalType.TIMESTAMP)
     private Date dischargeDate;
     private String loadingPlace;
-    @Temporal(TemporalType.TIMESTAMP)
     private Date loadingDate;
 
     public Date getLoadingDate() {
@@ -91,23 +79,18 @@ public class Cargo {
         this.id = id;
     }
     
-    public Cargo() {
+    public CargoView() {
     }
 
-    public Cargo(int quality, int weightIn, int weightOut, String dischargingPlace, Date dischargeDate, String loadingPlace, Date loadingDate) {
-        this.quality = quality;
-        this.weightIn = weightIn;
-        this.weightOut = weightOut;
-        this.dischargingPlace = dischargingPlace;
-        if (dischargeDate!=null){
-            dischargeDate.setTime(dischargeDate.getTime()-dischargeDate.getTime()%1000);
-        }
-        this.dischargeDate = dischargeDate;
-        this.loadingPlace = loadingPlace;
-        if (loadingDate!=null){
-            loadingDate.setTime(loadingDate.getTime()-loadingDate.getTime()%1000);
-        }
-        this.loadingDate = loadingDate;
+    public CargoView(Cargo cargo) {
+        this.dischargeDate=cargo.getDischargeDate();
+        this.dischargingPlace=cargo.getLoadingPlace();
+        this.id=cargo.getId();
+        this.loadingDate=cargo.getLoadingDate();
+        this.loadingPlace=cargo.getLoadingPlace();
+        this.quality=cargo.getQuality();
+        this.weightIn=cargo.getWeightIn();
+        this.weightOut=cargo.getWeightOut();
     }
 
     @Override
@@ -137,7 +120,7 @@ public class Cargo {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Cargo other = (Cargo) obj;
+        final CargoView other = (CargoView) obj;
         if (this.id != other.id) {
             return false;
         }
@@ -155,5 +138,4 @@ public class Cargo {
         }
         return true;
     }
-    
 }

@@ -3,39 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.avectis.transportcontrol.entity;
+package com.avectis.transportcontrol.view;
 
 import java.util.Date;
 import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
- * @author DPoplauski
+ * @author Dima
  */
-@Entity
-@Table(name="cards")
-public class Card {
-    @Id
-    @GeneratedValue(generator="increment")
-    @GenericGenerator(name="increment",strategy="increment")
+public class CardView {
+
     private long id;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "carId")
-    private Car car;
+    private CarView car;
     private long cardNumber;
     private int state;
     private int accessLevel;
-    @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
     
     public Date getCreateDate() {
@@ -65,10 +48,10 @@ public class Card {
     public void setCardNumber(long cardNumber) {
         this.cardNumber = cardNumber;
     }
-    public Car getCar() {
+    public CarView getCar() {
         return car;
     }
-    public void setCar(Car car) {
+    public void setCar(CarView car) {
         this.car = car;
     }
     public Long getId() {
@@ -77,11 +60,11 @@ public class Card {
     public void setId(long cardId) {
         this.id = cardId;
     }
-    public Card() {
+    public CardView() {
         
     }
 
-    public Card(Car car, long cardNumber, int state, int accessLevel) {
+    public CardView(CarView car, long cardNumber, int state, int accessLevel) {
         this.car = car;
         this.cardNumber = cardNumber;
         this.state = state;
@@ -110,7 +93,7 @@ public class Card {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Card other = (Card) obj;
+        final CardView other = (CardView) obj;
         if (!Objects.equals(this.car, other.car)) {
             return false;
         }
