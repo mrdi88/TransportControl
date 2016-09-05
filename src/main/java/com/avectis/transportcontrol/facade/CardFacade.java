@@ -23,6 +23,7 @@ public class CardFacade {
     private CarDAO carDAO;
     private CardDAO cardDAO;
     private QueueDAO queueDAO;
+    private CarFacade carFacade;
 
     public CardFacade() {
     }
@@ -54,25 +55,27 @@ public class CardFacade {
     public void setCardDAO(CardDAO cardDAO) {
         this.cardDAO = cardDAO;
     }
-
     public void setCarDAO(CarDAO carDAO) {
         this.carDAO = carDAO;
     }
-
     public void setQueueDAO(QueueDAO queueDAO) {
         this.queueDAO = queueDAO;
     }
-    private Card cardFromView(CardView cardv){
-        Card card = new Card();
-        Car car=null;
-        if (cardv.getCar()!= null && cardv.getCar().getId()!=null && cardv.getCar().getId() > 0) {
-            car = carDAO.getCar(cardv.getCar().getId());
+    public Card cardFromView(CardView cardv){
+        Card card = null;
+        if (card.getId() != null && card.getId() > 0) {
+            card = cardDAO.getCard(card.getId());
+        } else {
+            card = new Card();
+        }
+        Car car = null;
+        if (cardv.getCar()!= null ){
+            car=carFacade.carFromView(cardv.getCar());
         }
         card.setCar(car);
         card.setAccessLevel(cardv.getAccessLevel());
         card.setCardNumber(cardv.getCardNumber());
         card.setCreateDate(cardv.getCreateDate());
-        card.setId(cardv.getId());
         card.setState(cardv.getState());
         return card;
     }

@@ -93,7 +93,7 @@ public class Car {
     public void setCargo(Cargo cargo) {
         this.cargo = cargo;
     }
-    public long getId() {
+    public Long getId() {
         return id;
     }
     public void setId(long carId) {

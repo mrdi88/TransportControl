@@ -10,15 +10,13 @@ import java.util.List;
 import java.util.TimeZone;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import static org.junit.Assert.*;
-import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 @ContextConfiguration(locations = {"/tcsDataBase.xml", "/tcsFacade.xml"})
-@TransactionConfiguration(transactionManager = "transactionManager")
-public class FacadeTest extends AbstractTransactionalJUnit4SpringContextTests {
+//@TransactionConfiguration(transactionManager = "transactionManager")
+public class FacadeTest extends AbstractJUnit4SpringContextTests {//AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
     private CarFacade carFacade;
@@ -28,7 +26,7 @@ public class FacadeTest extends AbstractTransactionalJUnit4SpringContextTests {
     private QueueFacade queueFacade;
 
     @Test
-    @Rollback(false)
+    //@Rollback(false)
     public void carFacadeTest() {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         CarView car= new CarView();
@@ -49,6 +47,7 @@ public class FacadeTest extends AbstractTransactionalJUnit4SpringContextTests {
         //get car
         assertEquals(car,saved_car);
         //create car list
+        car.setId(0);
         car.getCargo().setId(0);
         car.getDriver().setId(0);
         carFacade.add(car);
