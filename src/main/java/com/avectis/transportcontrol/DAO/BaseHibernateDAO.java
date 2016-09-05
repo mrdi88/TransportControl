@@ -4,19 +4,21 @@
  * and open the template in the editor.
  */
 package com.avectis.transportcontrol.DAO;
-import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.hibernate.SessionFactory;
+
+
 /**
  *
  * @author Dima
  */
 public abstract class BaseHibernateDAO {
     
-    protected HibernateTemplate template;
+    protected SessionFactory  sessionFactory;
     
-    public HibernateTemplate getTemplate() {
-        return template;
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
-    public void setTemplate(HibernateTemplate template) {
-        this.template = template;
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 }

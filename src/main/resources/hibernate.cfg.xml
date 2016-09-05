@@ -13,5 +13,7 @@
     <mapping class="com.avectis.transportcontrol.entity.Card" file="" jar="" package="" resource=""/>
     <mapping class="com.avectis.transportcontrol.entity.Queue" file="" jar="" package="" resource=""/>
     <mapping class="com.avectis.transportcontrol.entity.QueueElement" file="" jar="" package="" resource=""/>
+    <mapping resource="Classes.hbm.xml"/>
+    <mapping resource="maping.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

@@ -13,7 +13,7 @@ import java.util.List;
  * @author DPoplauski
  */
 public interface QueueDAO {
-    public void Update(Queue queue);
+    public void update(Queue queue);
     public Long addQueue(Queue queue);
     public Queue getQueue(Long id);
     public List<Queue> getQueueByName(String name);

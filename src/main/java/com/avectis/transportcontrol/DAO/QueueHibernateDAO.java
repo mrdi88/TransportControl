@@ -7,7 +7,8 @@ package com.avectis.transportcontrol.DAO;
 
 import com.avectis.transportcontrol.entity.Queue;
 import java.util.List;
-import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
@@ -22,8 +23,9 @@ public class QueueHibernateDAO extends BaseHibernateDAO implements QueueDAO{
      * @param queue Queue - witch entity to update
      */
     @Override
-    public void Update(Queue queue){
-            template.update(queue);
+    public void update(Queue queue){
+        Session session=sessionFactory.getCurrentSession();
+        session.update(queue);
     }
     /**
      * add new Queue entity using Hibernate
@@ -32,7 +34,8 @@ public class QueueHibernateDAO extends BaseHibernateDAO implements QueueDAO{
      */
     @Override
     public Long addQueue(Queue queue){
-        return (Long)template.save(queue);
+        Session session=sessionFactory.getCurrentSession();
+        return (Long)session.save(queue);
     }
     /**
      * get Queue object from DB using Hibernate
@@ -42,7 +45,9 @@ public class QueueHibernateDAO extends BaseHibernateDAO implements QueueDAO{
      */
     @Override
     public Queue getQueue(Long id){
-        return (Queue)template.load(Queue.class, id );
+        Session session=sessionFactory.getCurrentSession();
+        return (Queue)session.load(Queue.class, id );
+        
     }
     /**
      * get Queue object from DB using Hibernate
@@ -52,10 +57,11 @@ public class QueueHibernateDAO extends BaseHibernateDAO implements QueueDAO{
      */
     @Override
     public List<Queue> getQueueByName(String name){
-        DetachedCriteria criteria = DetachedCriteria.forClass(Queue.class);
+        Session session=sessionFactory.getCurrentSession();
+        Criteria criteria=session.createCriteria(Queue.class);
         criteria.addOrder(Order.desc("createDate"));
         criteria.add(Restrictions.eq("name", name));
-        return (List<Queue>)template.findByCriteria(criteria);    
+        return (List<Queue>)criteria.list();      
     }
     /**
      * get all Queue from Queue using Hibernate
@@ -64,8 +70,9 @@ public class QueueHibernateDAO extends BaseHibernateDAO implements QueueDAO{
      */
     @Override
     public List<Queue> getQueueList(){
-        DetachedCriteria criteria = DetachedCriteria.forClass(Queue.class);
-        return (List<Queue>)template.findByCriteria(criteria);    
+        Session session=sessionFactory.getCurrentSession();
+        Criteria criteria=session.createCriteria(Queue.class);
+        return (List<Queue>)criteria.list();    
     }
     /**
      * delete Queue object from DB using Hibernate
@@ -74,6 +81,7 @@ public class QueueHibernateDAO extends BaseHibernateDAO implements QueueDAO{
      */
     @Override
     public void deleteQueue(Queue queue){
-        template.delete(queue);
+        Session session=sessionFactory.getCurrentSession();
+        session.delete(queue);
     }
 }

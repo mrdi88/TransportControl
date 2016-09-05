@@ -81,6 +81,7 @@ public class CargoView {
     
     public CargoView() {
     }
+    
 
     public CargoView(Cargo cargo) {
         this.dischargeDate=cargo.getDischargeDate();

@@ -89,7 +89,6 @@ public class CarView {
         Driver driverEntity=car.getDriver();
         if (cargoEntity!=null) this.cargo=new CargoView(cargoEntity);
         if (driverEntity!=null) this.driver=new DriverView(driverEntity);
-        this.driver=new DriverView();
         this.createDate=car.getCreateDate();
         this.destination=car.getDestination();
         this.firstNumber=car.getFirstNumber();

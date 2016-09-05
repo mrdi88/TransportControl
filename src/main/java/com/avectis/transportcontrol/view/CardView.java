@@ -5,6 +5,7 @@
  */
 package com.avectis.transportcontrol.view;
 
+import com.avectis.transportcontrol.entity.Card;
 import java.util.Date;
 import java.util.Objects;
 
@@ -64,14 +65,16 @@ public class CardView {
         
     }
 
-    public CardView(CarView car, long cardNumber, int state, int accessLevel) {
-        this.car = car;
-        this.cardNumber = cardNumber;
-        this.state = state;
-        this.accessLevel = accessLevel;
-        Date dt=new Date();
-        dt.setTime(dt.getTime()-dt.getTime()%1000);
-        this.createDate=dt;
+    public CardView(Card card) {
+        if (card.getCar()!=null){
+            this.car= new CarView(card.getCar());
+        }
+        else this.car=null;
+        this.accessLevel=card.getAccessLevel();
+        this.cardNumber=card.getCardNumber();
+        this.createDate=card.getCreateDate();
+        this.id=card.getId();
+        this.state=card.getState();
     }
 
     @Override

@@ -7,7 +7,8 @@ package com.avectis.transportcontrol.DAO;
 
 import com.avectis.transportcontrol.entity.Card;
 import java.util.List;
-import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 
 /**
@@ -23,7 +24,8 @@ public class CardHibernateDAO extends BaseHibernateDAO implements CardDAO{
      */
     @Override
     public Long addCard(Card card){
-            return (Long)template.save(card);
+        Session session=sessionFactory.getCurrentSession();
+        return (Long)session.save(card);
     }
      /**
      * unpade Card using Hibernate
@@ -32,7 +34,8 @@ public class CardHibernateDAO extends BaseHibernateDAO implements CardDAO{
      */
     @Override
     public void Update(Card card){
-            template.update(card);
+        Session session=sessionFactory.getCurrentSession();
+        session.update(card);
     }
     /**
      * get Car object from DB using Hibernate
@@ -42,7 +45,8 @@ public class CardHibernateDAO extends BaseHibernateDAO implements CardDAO{
      */
     @Override
     public Card getCard(Long id){
-        return (Card) template.load(Card.class, id);
+        Session session=sessionFactory.getCurrentSession();
+        return (Card) session.load(Card.class, id);
     }
     /**
      * get all Cards from DB using Hibernate
@@ -51,9 +55,10 @@ public class CardHibernateDAO extends BaseHibernateDAO implements CardDAO{
      */
     @Override
     public List<Card> getCards(){
-        DetachedCriteria criteria = DetachedCriteria.forClass(Card.class);
+        Session session=sessionFactory.getCurrentSession();
+        Criteria criteria=session.createCriteria(Card.class);
         criteria.addOrder(Order.desc("createDate"));
-        return (List<Card>)template.findByCriteria(criteria);
+        return (List<Card>)criteria.list();
     }
     /**
      * delete Card object from DB using Hibernate
@@ -62,6 +67,7 @@ public class CardHibernateDAO extends BaseHibernateDAO implements CardDAO{
      */
     @Override
     public void deleteCard(Card card){
-        template.delete(card);
+        Session session=sessionFactory.getCurrentSession();
+        session.delete(card);
     }
 }

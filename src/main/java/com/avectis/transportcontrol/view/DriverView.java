@@ -25,6 +25,13 @@ public class DriverView {
         this.name=driver.getName();
         this.organization=driver.getOrganization();
     }
+    public DriverView(String name, String mobileNumber, String organization) {
+        this.name=name;
+        this.mobileNumber=mobileNumber;
+        this.organization=organization;
+    }
+    public DriverView() {
+    }
     public String getOrganization() {
         return organization;
     }
@@ -48,8 +55,6 @@ public class DriverView {
     }
     public void setId(long driverId) {
         this.id = driverId;
-    }
-    public DriverView() {
     }
 
     @Override

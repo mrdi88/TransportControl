@@ -5,11 +5,15 @@
  */
 package com.avectis.transportcontrol.facade;
 
+import com.avectis.transportcontrol.DAO.CarDAO;
 import com.avectis.transportcontrol.DAO.CardDAO;
 import com.avectis.transportcontrol.DAO.QueueDAO;
 import com.avectis.transportcontrol.entity.Car;
 import com.avectis.transportcontrol.entity.Card;
 import com.avectis.transportcontrol.view.CardView;
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -22,13 +26,37 @@ public class CardFacade {
 
     public CardFacade() {
     }
-
+    @Transactional
     public Long add(CardView card){
         return cardDAO.addCard(cardFromView(card));
     }
-    
+    @Transactional
+    public void update(CardView card){
+        cardDAO.Update(cardFromView(card));
+    }
+    @Transactional(readOnly = true)
+    public CardView getCar(Long id){
+        return new CardView(cardDAO.getCard(id));
+    }
+    @Transactional(readOnly = true)
+    public List<CardView> getList(){
+        List<Card> cards=cardDAO.getCards();
+        List<CardView> cardsView= new ArrayList<>();
+        for (Card card:cards){
+            cardsView.add(new CardView(card));
+        }
+        return cardsView;
+    }
+    @Transactional
+    public void delete(CardView card){
+        cardDAO.deleteCard(cardFromView(card));
+    }
     public void setCardDAO(CardDAO cardDAO) {
         this.cardDAO = cardDAO;
+    }
+
+    public void setCarDAO(CarDAO carDAO) {
+        this.carDAO = carDAO;
     }
 
     public void setQueueDAO(QueueDAO queueDAO) {

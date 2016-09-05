@@ -5,6 +5,8 @@
  */
 package com.avectis.transportcontrol.view;
 
+import com.avectis.transportcontrol.entity.Card;
+import com.avectis.transportcontrol.entity.Queue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -40,9 +42,17 @@ public class QueueView {
     public QueueView() {
     }
 
-    public QueueView(String name, List<CardView> cards) {
-        this.name = name;
-        this.cards = cards;
+    public QueueView(Queue queue) {
+        this.id=queue.getId();
+        this.name = queue.getName();
+        List<CardView> cardsV=new ArrayList<>();
+        if (queue.getCards()!=null){
+            for (Card card:queue.getCards()){
+                cardsV.add(new CardView(card));
+            }
+        }
+        this.cards = cardsV;
+        
     }
 
     @Override
