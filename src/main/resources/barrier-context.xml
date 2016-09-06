@@ -32,7 +32,7 @@
     </bean>
 
 
-    <bean id="barrierCollection" class="com.avectis.transportcontrol.control.barrier.BarrierCollection">
+    <bean id="barrierFacade" class="com.avectis.transportcontrol.facade.BarrierFacade">
         <property name="barrierCollection">
             <list>
                <ref bean="B1"/>

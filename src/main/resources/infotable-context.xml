@@ -31,7 +31,7 @@
     </bean>
 
 
-    <bean id="infoTableCollection" class="com.avectis.transportcontrol.control.infotable.InfoTableCollection">
+    <bean id="infoTableFacade" class="com.avectis.transportcontrol.facade.InfoTableFacade">
         <property name="infoTableCollection">
             <list>
                 <ref bean="SB1"/>

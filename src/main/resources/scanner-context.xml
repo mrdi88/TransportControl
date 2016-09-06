@@ -27,7 +27,7 @@
         </bean>
 
 
-        <bean id="scannerCollection" class="com.avectis.transportcontrol.control.scanner.ScannerCollection">
+        <bean id="scannerFacade" class="com.avectis.transportcontrol.facade.ScannerFacade">
             <property name="scannerCollection">
                 <list>
                     <ref bean="S1"/>

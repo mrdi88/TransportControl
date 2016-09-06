@@ -16,13 +16,18 @@ public class Barrier {
     }
 
     public void Open(){
+        System.out.println("Barrier name:="+this.name + " cmd:=Open" );
         this.barrierAdapter.Open();
     }
     public void Close(){
+        System.out.println("Barrier name:="+this.name + " cmd:=Close" );
         this.barrierAdapter.Close();
     }
-    public void GetState(){
+    public Boolean GetState(){
+        System.out.println("Barrier name:="+this.name + " cmd:=GetState" );
+        Boolean state=false;
         this.barrierAdapter.GetState();
+        return state;
     }
 
 
