@@ -3,34 +3,34 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.avectis.transportcontrol.entity;
+package com.avectis.transportcontrol.view;
 
+import com.avectis.transportcontrol.entity.Driver;
 import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
- * @author DPoplauski
+ * @author Dima
  */
-@Entity
-@Table(name = "drivers")
-public class Driver {
-    @Id
-    @GeneratedValue(generator="increment")
-    @GenericGenerator(name="increment", strategy="increment")
+public class DriverView {
+    
     private long id;
     private String name;
     private String mobileNumber;
     private String organization;
 
-    public Driver(String name, String mobileNumber, String organization) {
-        this.name = name;
-        this.mobileNumber = mobileNumber;
-        this.organization = organization;
+    public DriverView(Driver driver) {
+        this.id=driver.getId();
+        this.mobileNumber=driver.getMobileNumber();
+        this.name=driver.getName();
+        this.organization=driver.getOrganization();
+    }
+    public DriverView(String name, String mobileNumber, String organization) {
+        this.name=name;
+        this.mobileNumber=mobileNumber;
+        this.organization=organization;
+    }
+    public DriverView() {
     }
     public String getOrganization() {
         return organization;
@@ -50,13 +50,11 @@ public class Driver {
     public void setName(String name) {
         this.name = name;
     }
-    public Long getId() {
+    public long getId() {
         return id;
     }
     public void setId(long driverId) {
         this.id = driverId;
-    }
-    public Driver() {
     }
 
     @Override
@@ -82,7 +80,7 @@ public class Driver {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Driver other = (Driver) obj;
+        final DriverView other = (DriverView) obj;
         if (this.id != other.id) {
             return false;
         }
