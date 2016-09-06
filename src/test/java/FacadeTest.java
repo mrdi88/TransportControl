@@ -55,7 +55,7 @@ public class FacadeTest extends AbstractJUnit4SpringContextTests {//AbstractTran
         car.getCargo().setId(0);
         car.getDriver().setId(0);
         Long startTime=new Date().getTime();
-        for (int i=0; i<99; i++){
+        for (int i=0; i<9; i++){
             car.setCreateDate(new Date());
             carFacade.add(car);
         }
@@ -63,7 +63,7 @@ public class FacadeTest extends AbstractJUnit4SpringContextTests {//AbstractTran
         System.out.println("create time: "+(endTime-startTime));
         //get list
         List<CarView> cvList=carFacade.getList(null, null);
-        assertEquals(cvList.size(),100);
+        assertEquals(cvList.size(),10);
         System.out.println("car list ===");
         startTime=new Date().getTime();
         for (CarView cv:cvList){
@@ -93,7 +93,6 @@ public class FacadeTest extends AbstractJUnit4SpringContextTests {//AbstractTran
     //@Rollback(false)
     public void secondCardFacadeTest() {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-        //add car
         CarView car= new CarView();
         DriverView driver = new DriverView("Dima","+375292051312","avectis");
         CargoView cargo = new CargoView();
@@ -103,8 +102,47 @@ public class FacadeTest extends AbstractJUnit4SpringContextTests {//AbstractTran
         car.setCargo(cargo);
         car.setDriver(driver);
         car.setId(carFacade.add(car));
-        //add card
-        CardView card= new CardView();
-        card
+        //new Card
+        CardView card = new CardView();
+        card.setCar(car);
+        card.setCreateDate(new Date());
+        card.setId(cardFacade.add(card));
+        CardView saved_card=cardFacade.getCard(card.getId());
+        card.getCar().getDriver().setId(saved_card.getCar().getDriver().getId());
+        card.getCar().getCargo().setId(saved_card.getCar().getCargo().getId());
+        System.out.println("acard : "+card);
+        System.out.println("gcard : "+saved_card);
+        //get car
+        assertEquals(card,saved_card);
+        //create card list
+        card.setId(0);
+        card.getCar().setId(0);
+        card.getCar().getCargo().setId(0);
+        card.getCar().getDriver().setId(0);
+        Long startTime=new Date().getTime();
+        for (int i=0; i<9; i++){
+            card.getCar().setCreateDate(new Date());
+            card.getCar().setId(0);
+            card.getCar().setId(carFacade.add(card.getCar()));
+            card.setCreateDate(new Date());
+            cardFacade.add(card);
+        }
+        Long endTime=new Date().getTime();
+        System.out.println("create time: "+(endTime-startTime));
+        //get list
+        //delete
+        List<CardView> cvList= cardFacade.getList();
+        assertEquals(cvList.size(),10);
+        startTime=new Date().getTime();
+        for (CardView cv:cvList){
+            System.out.println("delete : "+cv);
+            cardFacade.delete(cv);
+            carFacade.delete(cv.getCar());
+        }
+        endTime=new Date().getTime();
+        System.out.println("delete time: "+(endTime-startTime));
+        //check
+        cvList= cardFacade.getList();
+        assertEquals(cvList.size(),0);
     }
 }

@@ -36,7 +36,7 @@ public class CardFacade {
         cardDAO.Update(cardFromView(card));
     }
     @Transactional(readOnly = true)
-    public CardView getCar(Long id){
+    public CardView getCard(Long id){
         return new CardView(cardDAO.getCard(id));
     }
     @Transactional(readOnly = true)
