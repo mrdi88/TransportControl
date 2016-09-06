@@ -10,11 +10,8 @@ import com.avectis.transportcontrol.entity.Car;
 import com.avectis.transportcontrol.entity.Cargo;
 import com.avectis.transportcontrol.entity.Driver;
 import com.avectis.transportcontrol.view.CarView;
-import com.avectis.transportcontrol.view.CargoView;
-import com.avectis.transportcontrol.view.DriverView;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,46 +63,49 @@ public class CarFacade {
     }
     
     public Car carFromView(CarView carv){
-        Car car = null;
+        Car car;
         if (carv.getId() != null && carv.getId() > 0) {
             car = carDAO.getCar(carv.getId());
         } else {
             car = new Car();
         }
-        car.setCargo(cargoFromView(carv.getCargo()));
-        car.setDriver(driverFromView(carv.getDriver()));
-        
         car.setCreateDate(carv.getCreateDate());
         car.setDestination(carv.getDestination());
         car.setFirstNumber(carv.getFirstNumber());
-        car.setId(carv.getId());
         car.setLeaveDate(carv.getLeaveDate());
         car.setSecondNumber(carv.getSecondNumber());
+        //create Cargo
+        Cargo cargo;
+        if (car.getCargo()!=null){
+            cargo = car.getCargo();
+        }else{
+            cargo = new Cargo();
+        }
+        if (carv.getCargo()!=null){
+            cargo.setDischargeDate(carv.getCargo().getDischargeDate());
+            cargo.setDischargingPlace(carv.getCargo().getLoadingPlace());
+            cargo.setLoadingDate(carv.getCargo().getLoadingDate());
+            cargo.setLoadingPlace(carv.getCargo().getLoadingPlace());
+            cargo.setQuality(carv.getCargo().getQuality());
+            cargo.setWeightIn(carv.getCargo().getWeightIn());
+            cargo.setWeightOut(carv.getCargo().getWeightOut());
+        }
+        car.setCargo(cargo);
+        //create Driver
+        Driver driver;
+        if (car.getDriver()!=null){
+            driver = car.getDriver();
+        }else{
+            driver = new Driver();
+        }
+        if (carv.getDriver()!=null){
+            driver.setMobileNumber(carv.getDriver().getMobileNumber());
+            driver.setName(carv.getDriver().getName());
+            driver.setOrganization(carv.getDriver().getOrganization());
+        }
+        car.setDriver(driver);
+
         return car;
-    }
- //move to car
-    public Driver driverFromView(DriverView driverv){
-        if (driverv==null) return null;
-        Driver driver = new Driver();
-        //driver.setId(driverv.getId());
-        driver.setMobileNumber(driverv.getMobileNumber());
-        driver.setName(driverv.getName());
-        driver.setOrganization(driverv.getOrganization());
-        return driver;
-    }
- //move to car
-    public Cargo cargoFromView(CargoView cargov){
-        if (cargov==null) return null;
-        Cargo cargo = new Cargo();
-        cargo.setDischargeDate(cargov.getDischargeDate());
-        cargo.setDischargingPlace(cargov.getLoadingPlace());
-        //cargo.setId(cargov.getId());
-        cargo.setLoadingDate(cargov.getLoadingDate());
-        cargo.setLoadingPlace(cargov.getLoadingPlace());
-        cargo.setQuality(cargov.getQuality());
-        cargo.setWeightIn(cargov.getWeightIn());
-        cargo.setWeightOut(cargov.getWeightOut());
-        return cargo;
     }
 }
 

@@ -61,10 +61,14 @@ public class CardFacade {
     public void setQueueDAO(QueueDAO queueDAO) {
         this.queueDAO = queueDAO;
     }
+
+    public void setCarFacade(CarFacade carFacade) {
+        this.carFacade = carFacade;
+    }
     public Card cardFromView(CardView cardv){
-        Card card = null;
-        if (card.getId() != null && card.getId() > 0) {
-            card = cardDAO.getCard(card.getId());
+        Card card;
+        if (cardv.getId() != null && cardv.getId() > 0) {
+            card = cardDAO.getCard(cardv.getId());
         } else {
             card = new Card();
         }

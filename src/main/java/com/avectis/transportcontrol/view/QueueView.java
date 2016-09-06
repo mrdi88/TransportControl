@@ -33,7 +33,7 @@ public class QueueView {
     public void setName(String name) {
         this.name = name;
     }
-    public long getId() {
+    public Long getId() {
         return id;
     }
     public void setId(long id) {

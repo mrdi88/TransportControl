@@ -23,6 +23,7 @@ public class QueueFacade {
     
     private QueueDAO queueDAO;
     private CardDAO cardDAO;
+    private CardFacade cardFacade;
     
     public QueueFacade() {
     }
@@ -34,7 +35,10 @@ public class QueueFacade {
     public void setCardDAO(CardDAO cardDAO) {
         this.cardDAO = cardDAO;
     }
-    
+
+    public void setCardFacade(CardFacade cardFacade) {
+        this.cardFacade = cardFacade;
+    }
     @Transactional(readOnly = true)
     public QueueView getQueue(Long id){
         return new QueueView(queueDAO.getQueue(id));
@@ -57,12 +61,17 @@ public class QueueFacade {
         queueDAO.deleteQueue(queueFromView(qv));
     }
     private Queue queueFromView(QueueView queueView){
-        Queue queue=new Queue();
-        queue.setId(queueView.getId());
+        Queue queue;
+        if (queueView.getId() != null && queueView.getId() > 0) {
+            queue = queueDAO.getQueue(queueView.getId());
+        } else {
+            queue = new Queue();
+        }
         queue.setName(queueView.getName());
+        //set cards list
         List<Card> cards=new ArrayList<>();
         for (CardView cv:queueView.getCards()){
-            cards.add(cardDAO.getCard(cv.getId()));
+            cards.add(cardFacade.cardFromView(cv));
         }
         queue.setCards(cards);
         return queue;
