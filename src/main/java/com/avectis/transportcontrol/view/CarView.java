@@ -3,45 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.avectis.transportcontrol.entity;
+package com.avectis.transportcontrol.view;
 
+import com.avectis.transportcontrol.entity.Car;
+import com.avectis.transportcontrol.entity.Cargo;
+import com.avectis.transportcontrol.entity.Driver;
 import java.util.Date;
 import java.util.Objects;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
- * @author DPoplauski
+ * @author Dima
  */
-@Entity
-@Table(name="cars")
-public class Car {
-    @Id
-    @GeneratedValue(generator="increment")
-    @GenericGenerator(name="increment",strategy="increment")
+public class CarView {
+
     private long id;
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "cargoId")
-    private Cargo cargo;
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "driverId")
-    private Driver driver;
+    private CargoView cargo;
+    private DriverView driver;
     private String destination;
     private String firstNumber;
     private String secondNumber;
-    @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
-    @Temporal(TemporalType.TIMESTAMP)
     private Date leaveDate;
 
     public Date getLeaveDate() {
@@ -81,16 +63,16 @@ public class Car {
     public void setDestination(String destination) {
         this.destination = destination;
     }
-    public Driver getDriver() {
+    public DriverView getDriver() {
         return driver;
     }
-    public void setDriver(Driver driver) {
+    public void setDriver(DriverView driver) {
         this.driver = driver;
     }
-    public Cargo getCargo() {
+    public CargoView getCargo() {
         return cargo;
     }
-    public void setCargo(Cargo cargo) {
+    public void setCargo(CargoView cargo) {
         this.cargo = cargo;
     }
     public Long getId() {
@@ -99,21 +81,22 @@ public class Car {
     public void setId(long carId) {
         this.id = carId;
     }
-    public Car() {
+    public CarView() {
         
     }
-
-    public Car(Cargo cargo, Driver driver, String firstNumber, String secondNumber, String destination) {
-        this.cargo = cargo;
-        this.driver = driver;
-        this.destination = destination;
-        this.firstNumber = firstNumber;
-        this.secondNumber = secondNumber;
-        Date dt=new Date();
-        dt.setTime(dt.getTime()-dt.getTime()%1000);
-        this.createDate = dt;
+    public CarView(Car car) {
+        Cargo cargoEntity=car.getCargo();
+        Driver driverEntity=car.getDriver();
+        if (cargoEntity!=null) this.cargo=new CargoView(cargoEntity);
+        if (driverEntity!=null) this.driver=new DriverView(driverEntity);
+        this.createDate=car.getCreateDate();
+        this.destination=car.getDestination();
+        this.firstNumber=car.getFirstNumber();
+        this.id=car.getId();
+        this.leaveDate=car.getLeaveDate();
+        this.secondNumber=car.getSecondNumber();
     }
-
+    
     @Override
     public String toString() {
         return "Car{" + "carId=" + id + ", cargo=" + cargo + ", driver=" + driver + ", destination=" + destination + ", firstNumber=" + firstNumber + ", secondNumber=" + secondNumber + ", createDate=" + createDate + ", leaveDate=" + leaveDate + '}';
@@ -141,7 +124,7 @@ public class Car {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Car other = (Car) obj;
+        final CarView other = (CarView) obj;
         if (this.id != other.id) {
             return false;
         }
@@ -169,3 +152,4 @@ public class Car {
         return true;
     }
 }
+

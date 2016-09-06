@@ -3,39 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.avectis.transportcontrol.entity;
+package com.avectis.transportcontrol.view;
 
+import com.avectis.transportcontrol.entity.Card;
 import java.util.Date;
 import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
- * @author DPoplauski
+ * @author Dima
  */
-@Entity
-@Table(name="cards")
-public class Card {
-    @Id
-    @GeneratedValue(generator="increment")
-    @GenericGenerator(name="increment",strategy="increment")
+public class CardView {
+
     private long id;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "carId")
-    private Car car;
+    private CarView car;
     private long cardNumber;
     private int state;
     private int accessLevel;
-    @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
     
     public Date getCreateDate() {
@@ -65,10 +49,10 @@ public class Card {
     public void setCardNumber(long cardNumber) {
         this.cardNumber = cardNumber;
     }
-    public Car getCar() {
+    public CarView getCar() {
         return car;
     }
-    public void setCar(Car car) {
+    public void setCar(CarView car) {
         this.car = car;
     }
     public Long getId() {
@@ -77,18 +61,20 @@ public class Card {
     public void setId(long cardId) {
         this.id = cardId;
     }
-    public Card() {
+    public CardView() {
         
     }
 
-    public Card(Car car, long cardNumber, int state, int accessLevel) {
-        this.car = car;
-        this.cardNumber = cardNumber;
-        this.state = state;
-        this.accessLevel = accessLevel;
-        Date dt=new Date();
-        dt.setTime(dt.getTime()-dt.getTime()%1000);
-        this.createDate=dt;
+    public CardView(Card card) {
+        if (card.getCar()!=null){
+            this.car= new CarView(card.getCar());
+        }
+        else this.car=null;
+        this.accessLevel=card.getAccessLevel();
+        this.cardNumber=card.getCardNumber();
+        this.createDate=card.getCreateDate();
+        this.id=card.getId();
+        this.state=card.getState();
     }
 
     @Override
@@ -110,7 +96,7 @@ public class Card {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Card other = (Card) obj;
+        final CardView other = (CardView) obj;
         if (!Objects.equals(this.car, other.car)) {
             return false;
         }
