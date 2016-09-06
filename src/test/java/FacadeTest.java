@@ -1,21 +1,21 @@
 
-import com.avectis.transportcontrol.facade.CarFacade;
-import com.avectis.transportcontrol.facade.CardFacade;
-import com.avectis.transportcontrol.facade.QueueFacade;
+import com.avectis.transportcontrol.facade.*;
 import com.avectis.transportcontrol.view.CarView;
 import com.avectis.transportcontrol.view.CardView;
 import com.avectis.transportcontrol.view.CargoView;
 import com.avectis.transportcontrol.view.DriverView;
+import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
+
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import static org.junit.Assert.*;
-import org.junit.FixMethodOrder;
-import org.junit.runners.MethodSorters;
-import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
+
+import static org.junit.Assert.assertEquals;
 
 @ContextConfiguration(locations = {"/tcsDataBase.xml", "/tcsFacade.xml"})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -28,6 +28,15 @@ public class FacadeTest extends AbstractJUnit4SpringContextTests {//AbstractTran
     private CardFacade cardFacade;
     @Autowired
     private QueueFacade queueFacade;
+
+    @Autowired
+    private BarrierFacade barrierFacade;
+    @Autowired
+    private InfoTableFacade infoTableFacade;
+    @Autowired
+    private ScannerFacade scannerFacade;
+    @Autowired
+    private TrafficLightFacade trafficLightFacade;
 
     @Test
     //@Rollback(false)
@@ -105,6 +114,5 @@ public class FacadeTest extends AbstractJUnit4SpringContextTests {//AbstractTran
         car.setId(carFacade.add(car));
         //add card
         CardView card= new CardView();
-        card
     }
 }
