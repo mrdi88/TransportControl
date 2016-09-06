@@ -39,6 +39,10 @@ public class QueueFacade {
     public void setCardFacade(CardFacade cardFacade) {
         this.cardFacade = cardFacade;
     }
+    @Transactional
+    public Long addQueue(QueueView queueView){
+        return queueDAO.addQueue(queueFromView(queueView));
+    }
     @Transactional(readOnly = true)
     public QueueView getQueue(Long id){
         return new QueueView(queueDAO.getQueue(id));

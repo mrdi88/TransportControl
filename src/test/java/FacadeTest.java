@@ -6,6 +6,7 @@ import com.avectis.transportcontrol.view.CarView;
 import com.avectis.transportcontrol.view.CardView;
 import com.avectis.transportcontrol.view.CargoView;
 import com.avectis.transportcontrol.view.DriverView;
+import com.avectis.transportcontrol.view.QueueView;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -33,14 +34,7 @@ public class FacadeTest extends AbstractJUnit4SpringContextTests {//AbstractTran
     //@Rollback(false)
     public void firstCarFacadeTest() {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-        CarView car= new CarView();
-        DriverView driver = new DriverView("Dima","+375292051312","avectis");
-        CargoView cargo = new CargoView();
-        car.setCreateDate(new Date());
-        car.setFirstNumber("4700-EM1");
-        car.setSecondNumber("4700-EM2");
-        car.setCargo(cargo);
-        car.setDriver(driver);
+        CarView car= createCar();
         car.setId(carFacade.add(car));
         System.out.println("===");
         CarView saved_car=carFacade.get(car.getId());
@@ -93,14 +87,7 @@ public class FacadeTest extends AbstractJUnit4SpringContextTests {//AbstractTran
     //@Rollback(false)
     public void secondCardFacadeTest() {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-        CarView car= new CarView();
-        DriverView driver = new DriverView("Dima","+375292051312","avectis");
-        CargoView cargo = new CargoView();
-        car.setCreateDate(new Date());
-        car.setFirstNumber("4700-EM1");
-        car.setSecondNumber("4700-EM2");
-        car.setCargo(cargo);
-        car.setDriver(driver);
+        CarView car= createCar();
         car.setId(carFacade.add(car));
         //new Card
         CardView card = new CardView();
@@ -110,10 +97,14 @@ public class FacadeTest extends AbstractJUnit4SpringContextTests {//AbstractTran
         CardView saved_card=cardFacade.getCard(card.getId());
         card.getCar().getDriver().setId(saved_card.getCar().getDriver().getId());
         card.getCar().getCargo().setId(saved_card.getCar().getCargo().getId());
-        System.out.println("acard : "+card);
-        System.out.println("gcard : "+saved_card);
+        System.out.println("addCard : "+card);
+        System.out.println("getCard : "+saved_card);
         //get car
         assertEquals(card,saved_card);
+        saved_card.getCar().getDriver().setName("Ricky");
+        cardFacade.update(saved_card);
+        cardFacade.getCard(saved_card.getId());
+        assertEquals(saved_card.getCar().getDriver().getName(),"Ricky");
         //create card list
         card.setId(0);
         card.getCar().setId(0);
@@ -144,5 +135,67 @@ public class FacadeTest extends AbstractJUnit4SpringContextTests {//AbstractTran
         //check
         cvList= cardFacade.getList();
         assertEquals(cvList.size(),0);
+    }
+    @Test
+    public void thirdQueueFacade(){
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+        //greate car
+        QueueView queue=new QueueView();
+        queue.setName("R01");
+        queue.getCards().add(createCard());
+        queue.getCards().add(createCard());
+        queue.getCards().add(createCard());
+        queue.setId(queueFacade.addQueue(queue));
+        //get
+        QueueView saved_queue = queueFacade.getQueue(queue.getId());
+        System.out.println("add qv: "+queue);
+        System.out.println("get qv: "+saved_queue);
+        assertEquals(queue.getCards().size(),saved_queue.getCards().size());
+        //add second
+        queue=new QueueView();
+        queue.setName("R02");
+        queue.getCards().add(createCard());
+        queue.getCards().add(createCard());
+        queue.getCards().add(createCard());
+        queue.getCards().add(createCard());
+        queue.getCards().add(createCard());
+        queue.setId(queueFacade.addQueue(queue));
+        //update
+        int  size=queue.getCards().size();
+        saved_queue=queueFacade.getQueue(queue.getId());
+        saved_queue.getCards().remove(0);
+        queueFacade.update(saved_queue);
+        saved_queue=queueFacade.getQueue(queue.getId());
+        assertEquals(saved_queue.getCards().size(),size-1);
+        //delete
+        List<QueueView> qvList=queueFacade.getQueueList();
+        assertEquals(qvList.size(),2);
+        for (QueueView qv:qvList){
+            System.out.println("delete qv: "+qv);
+            queueFacade.delete(qv);
+        }
+        qvList=queueFacade.getQueueList();
+        assertEquals(qvList.size(),0);
+        //delete cards, cars
+    }
+    private CarView createCar(){
+        CarView car= new CarView();
+        DriverView driver = new DriverView("Dima","+375292051312","avectis");
+        CargoView cargo = new CargoView();
+        car.setCreateDate(new Date());
+        car.setFirstNumber("4700-EM1");
+        car.setSecondNumber("4700-EM2");
+        car.setCargo(cargo);
+        car.setDriver(driver);
+        return car;
+    }
+    private CardView createCard(){
+        CarView car= createCar();
+        car.setId(carFacade.add(car));
+        CardView card = new CardView();
+        card.setCar(car);
+        card.setCreateDate(new Date());
+        card.setId(cardFacade.add(card));
+        return card;
     }
 }
