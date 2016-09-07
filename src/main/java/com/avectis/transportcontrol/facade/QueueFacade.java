@@ -64,6 +64,10 @@ public class QueueFacade {
     public void delete(QueueView qv){
         queueDAO.deleteQueue(queueFromView(qv));
     }
+    @Transactional
+    public void deleteCardFromQueues(CardView qv){
+        queueDAO.deleteQueue(queueFromView(qv));
+    }
     private Queue queueFromView(QueueView queueView){
         Queue queue;
         if (queueView.getId() != null && queueView.getId() > 0) {
