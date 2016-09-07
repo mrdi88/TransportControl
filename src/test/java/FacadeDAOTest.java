@@ -21,7 +21,7 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 @ContextConfiguration(locations = {"/tcsDataBase.xml", "/tcsFacade.xml"})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 //@TransactionConfiguration(transactionManager = "transactionManager")
-public class FacadeTest extends AbstractJUnit4SpringContextTests {//AbstractTransactionalJUnit4SpringContextTests {
+public class FacadeDAOTest extends AbstractJUnit4SpringContextTests {//AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
     private CarFacade carFacade;

@@ -4,6 +4,10 @@
 
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
 ">
+    <import resource="barrier-context.xml"/>
+    <import resource="scanner-context.xml"/>
+    <import resource="traffic_light-context.xml"/>
+    <import resource="infotable-context.xml"/>
     <bean id="baseHibernateDAO" class="com.avectis.transportcontrol.DAO.BaseHibernateDAO" abstract="true">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
