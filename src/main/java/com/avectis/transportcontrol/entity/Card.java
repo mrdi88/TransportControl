@@ -107,23 +107,27 @@ public class Card {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof Card)) {
             return false;
         }
         final Card other = (Card) obj;
-        if (!Objects.equals(this.car, other.car)) {
+        if (this.getCar()!=null){
+            if (!this.getCar().equals(other.getCar())) {
+                return false;
+            }
+        } else{
+            if (other.getCar()!=null) return false;
+        }
+        if (this.getCardNumber() != other.getCardNumber()) {
             return false;
         }
-        if (this.cardNumber != other.cardNumber) {
+        if (this.getState() != other.getState()) {
             return false;
         }
-        if (this.state != other.state) {
+        if (this.getAccessLevel() != other.getAccessLevel()) {
             return false;
         }
-        if (this.accessLevel != other.accessLevel) {
-            return false;
-        }
-        if (!Objects.equals(this.createDate, other.createDate)) {
+        if (!Objects.equals(this.getCreateDate(), other.getCreateDate())) {
                 return false;
         }
         return true;

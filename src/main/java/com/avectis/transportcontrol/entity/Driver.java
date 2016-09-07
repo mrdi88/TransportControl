@@ -79,20 +79,20 @@ public class Driver {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof Driver)) {
             return false;
         }
         final Driver other = (Driver) obj;
-        if (this.id != other.id) {
+        if (this.getId() != other.getId()) {
             return false;
         }
-        if (!Objects.equals(this.name, other.name)) {
+        if (!Objects.equals(this.getName(), other.getName())) {
             return false;
         }
-        if (!Objects.equals(this.mobileNumber, other.mobileNumber)) {
+        if (!Objects.equals(this.getMobileNumber(), other.getMobileNumber())) {
             return false;
         }
-        if (!Objects.equals(this.organization, other.organization)) {
+        if (!Objects.equals(this.getOrganization(), other.getOrganization())) {
             return false;
         }
         return true;

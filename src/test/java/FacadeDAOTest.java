@@ -169,6 +169,11 @@ public class FacadeDAOTest extends AbstractJUnit4SpringContextTests {//AbstractT
         queueFacade.update(saved_queue);
         saved_queue=queueFacade.getQueue(queue.getId());
         assertEquals(saved_queue.getCards().size(),size-1);
+        //delete card from queues
+        saved_queue=queueFacade.getQueue(saved_queue.getId());
+        queueFacade.deleteCardFromQueues(saved_queue.getCards().get(0));
+        saved_queue=queueFacade.getQueue(saved_queue.getId());
+        assertEquals(saved_queue.getCards().size(),size-2);
         //delete
         List<QueueView> qvList=queueFacade.getQueueList();
         assertEquals(qvList.size(),2);

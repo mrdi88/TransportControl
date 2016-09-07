@@ -74,14 +74,14 @@ public class Queue {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof Queue)) {
             return false;
         }
         final Queue other = (Queue) obj;
-        if (!Objects.equals(this.name, other.name)) {
+        if (!Objects.equals(this.getName(), other.getName())) {
             return false;
         }
-        if (!Objects.equals(this.cards, other.cards)) {
+        if (!Objects.equals(this.getCards(), other.getCards())) {
             return false;
         }
         return true;

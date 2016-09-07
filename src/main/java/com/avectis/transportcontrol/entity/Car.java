@@ -138,32 +138,40 @@ public class Car {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof Car)) {
             return false;
         }
         final Car other = (Car) obj;
-        if (this.id != other.id) {
+        if (this.getId() != other.getId()) {
             return false;
         }
-        if (!Objects.equals(this.cargo, other.cargo)) {
+        if (this.getCargo()!=null){
+            if (!this.getCargo().equals(other.getCargo())) {
+                return false;
+            }
+        } else{
+            if (other.getCargo()!=null) return false;
+        }
+        if (this.getDriver()!=null){
+            if (!this.getDriver().equals(other.getDriver())) {
+                return false;
+            }
+        } else{
+            if (other.getDriver()!=null) return false;
+        }
+        if (!Objects.equals(this.getDestination(), other.getDestination())) {
             return false;
         }
-        if (!Objects.equals(this.driver, other.driver)) {
+        if (!Objects.equals(this.getFirstNumber(), other.getFirstNumber())) {
             return false;
         }
-        if (!Objects.equals(this.destination, other.destination)) {
+        if (!Objects.equals(this.getSecondNumber(), other.getSecondNumber())) {
             return false;
         }
-        if (!Objects.equals(this.firstNumber, other.firstNumber)) {
-            return false;
-        }
-        if (!Objects.equals(this.secondNumber, other.secondNumber)) {
-            return false;
-        }
-        if ((!Objects.equals(this.createDate, other.createDate))) {
+        if ((!Objects.equals(this.getCreateDate(), other.getCreateDate()))) {
                 return false;
         }
-        if ((!Objects.equals(this.leaveDate, other.leaveDate))) {
+        if ((!Objects.equals(this.getLeaveDate(), other.getLeaveDate()))) {
                 return false;
         }
         return true;

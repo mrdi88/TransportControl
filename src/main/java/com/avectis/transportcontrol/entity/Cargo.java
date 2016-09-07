@@ -134,23 +134,23 @@ public class Cargo {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof Cargo)) {
             return false;
         }
         final Cargo other = (Cargo) obj;
-        if (this.id != other.id) {
+        if (this.getId() != other.getId()) {
             return false;
         }
-        if (this.quality != other.quality) {
+        if (this.getQuality() != other.getQuality()) {
             return false;
         }
-        if (this.weightIn != other.weightIn) {
+        if (this.getWeightIn() != other.getWeightIn()) {
             return false;
         }
-        if (this.weightOut != other.weightOut) {
+        if (this.getWeightOut() != other.getWeightOut()) {
             return false;
         }
-        if (!Objects.equals(this.dischargingPlace, other.dischargingPlace)) {
+        if (!Objects.equals(this.getDischargingPlace(), other.getDischargingPlace())) {
             return false;
         }
         return true;

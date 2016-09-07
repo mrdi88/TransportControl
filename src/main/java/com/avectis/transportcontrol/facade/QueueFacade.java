@@ -65,8 +65,29 @@ public class QueueFacade {
         queueDAO.deleteQueue(queueFromView(qv));
     }
     @Transactional
-    public void deleteCardFromQueues(CardView qv){
-        //queueDAO.deleteQueue(queueFromView(qv));
+    public void deleteCardFromQueues(CardView cardv){
+        Card card;
+        if (cardv.getId() != null && cardv.getId() > 0) {
+            card=cardDAO.getCard(cardv.getId());
+        } else {
+            return;
+        }
+        List<Queue> qList=queueDAO.getQueueList();
+        for (Queue q:qList){
+            if (q.getCards().remove(card)) queueDAO.update(q);
+        }
+    }
+    @Transactional
+    public void deleteCardFromQueue(QueueView queuev, CardView cardv){
+        Card card;
+        Queue queue;
+        if ((cardv.getId() != null && cardv.getId() > 0) && (queuev.getId() != null && queuev.getId() > 0)) {
+            card=cardDAO.getCard(cardv.getId());
+            queue=queueDAO.getQueue(queuev.getId());
+        } else {
+            return;
+        }
+        if (queue.getCards().remove(card)) queueDAO.update(queue);;
     }
     private Queue queueFromView(QueueView queueView){
         Queue queue;
