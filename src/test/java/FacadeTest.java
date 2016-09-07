@@ -160,9 +160,11 @@ public class FacadeTest extends AbstractJUnit4SpringContextTests {//AbstractTran
         queue.getCards().add(createCard());
         queue.getCards().add(createCard());
         queue.setId(queueFacade.addQueue(queue));
+        System.out.println("R02 created: "+queue);
         //update
         int  size=queue.getCards().size();
         saved_queue=queueFacade.getQueue(queue.getId());
+        System.out.println("R02 get    : "+queue);
         saved_queue.getCards().remove(0);
         queueFacade.update(saved_queue);
         saved_queue=queueFacade.getQueue(queue.getId());
@@ -177,6 +179,11 @@ public class FacadeTest extends AbstractJUnit4SpringContextTests {//AbstractTran
         qvList=queueFacade.getQueueList();
         assertEquals(qvList.size(),0);
         //delete cards, cars
+        List<CardView> cvList=cardFacade.getList();
+        for (CardView cv:cvList){
+                cardFacade.delete(cv);
+                carFacade.delete(cv.getCar());
+        }
     }
     private CarView createCar(){
         CarView car= new CarView();
