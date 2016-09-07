@@ -52,6 +52,5 @@ public class FacadeControlTest extends AbstractJUnit4SpringContextTests {//Abstr
         infoTableFacade.SendData(new String[]{"hello", "world"}, "InfoTable2");
         infoTableFacade.getDateLastUpdate("InfoTable2");
 
-        absdfdsyubf;
     }
 }
