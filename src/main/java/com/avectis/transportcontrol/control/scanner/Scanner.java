@@ -11,7 +11,18 @@ public class Scanner {
         this.scannerAdapter = scannerAdapter;
     }
     public String GetData(){
-        System.out.println("Scanner name:="+this.name + " cmd:=GetData" );
         return this.scannerAdapter.GetData();
     }
+
+    public Scanner() {
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setScannerAdapter(ScannerAdapter scannerAdapter) {
+        this.scannerAdapter = scannerAdapter;
+    }
+    
 }
