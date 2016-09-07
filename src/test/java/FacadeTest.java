@@ -76,7 +76,7 @@ public class FacadeTest extends AbstractJUnit4SpringContextTests {//AbstractTran
         System.out.println("car list ===");
         startTime=new Date().getTime();
         for (CarView cv:cvList){
-            //System.out.println(cv);
+            System.out.println(cv);
         }
         endTime=new Date().getTime();
         System.out.println("read time: "+(endTime-startTime));
@@ -114,5 +114,33 @@ public class FacadeTest extends AbstractJUnit4SpringContextTests {//AbstractTran
         car.setId(carFacade.add(car));
         //add card
         CardView card= new CardView();
+    }
+
+    @Test
+    public void control(){
+        barrierFacade.Open("barrier1");
+        barrierFacade.Close("barrier1");
+        barrierFacade.GetState("barrier1");
+
+        barrierFacade.Open("barrier2");
+        barrierFacade.Close("barrier2");
+        barrierFacade.GetState("barrier2");
+
+        scannerFacade.GetData("scanner1");
+        scannerFacade.GetData("scanner2");
+
+        trafficLightFacade.TurnOn("traffic_light1");
+        trafficLightFacade.TurnOff("traffic_light1");
+        trafficLightFacade.GetState("traffic_light1");
+
+        trafficLightFacade.TurnOn("traffic_light2");
+        trafficLightFacade.TurnOff("traffic_light2");
+        trafficLightFacade.GetState("traffic_light2");
+
+        infoTableFacade.SendData(new String[]{"hello", "world"}, "InfoTable1");
+        infoTableFacade.getDateLastUpdate("InfoTable1");
+
+        infoTableFacade.SendData(new String[]{"hello", "world"}, "InfoTable2");
+        infoTableFacade.getDateLastUpdate("InfoTable2");
     }
 }

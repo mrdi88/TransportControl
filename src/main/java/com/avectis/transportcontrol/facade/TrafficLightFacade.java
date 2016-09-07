@@ -18,14 +18,14 @@ public class TrafficLightFacade {
     }
 
     /*Включение светофора по ID*/
-    public void barrierOpen(String id){
+    public void TurnOn(String id){
         TrafficLight trafficLight = GetElementById(id);
         if(null != trafficLight)trafficLight.TurnOn();
         else System.out.println("Barrier's not found");
     }
 
     /*Выключение светофора по ID*/
-    public void barrierClose(String id){
+    public void TurnOff(String id){
         TrafficLight trafficLight = GetElementById(id);
         if(null != trafficLight)trafficLight.TurnOff();
         else System.out.println("Barrier's not found");

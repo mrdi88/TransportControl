@@ -18,7 +18,7 @@ public class ScannerFacade {
     }
 
     /*Получение данных со сканера по ID*/
-    public String GetData(String [] data, String id){
+    public String GetData(String id){
         Scanner scanner = GetElementById(id);
         if(null != scanner) return scanner.GetData();
         else {

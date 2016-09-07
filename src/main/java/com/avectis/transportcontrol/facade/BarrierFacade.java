@@ -19,14 +19,14 @@ public class BarrierFacade {
     }
 
     /*Отрытие шлагбаума по ID*/
-    public void barrierOpen(String id){
+    public void Open(String id){
         Barrier barrier = GetElementById(id);
         if(null != barrier)barrier.Open();
         else System.out.println("Barrier's not found");
     }
 
     /*Закрытие шлагбаума по ID*/
-    public void barrierClose(String id){
+    public void Close(String id){
         Barrier barrier = GetElementById(id);
         if(null != barrier)barrier.Close();
         else System.out.println("Barrier's not found");
