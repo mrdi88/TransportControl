@@ -5,7 +5,6 @@
  */
 
 import com.avectis.transportcontrol.control.scanner.Scanner;
-import com.avectis.transportcontrol.control.scanner.ScannerAdapter;
 import com.avectis.transportcontrol.control.scanner.ScannerAdapterCOM;
 import org.junit.After;
 import org.junit.AfterClass;
