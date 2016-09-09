@@ -1,8 +1,8 @@
 
-import com.avectis.transportcontrol.facade.BarrierFacade;
-import com.avectis.transportcontrol.facade.InfoTableFacade;
-import com.avectis.transportcontrol.facade.ScannerFacade;
-import com.avectis.transportcontrol.facade.TrafficLightFacade;
+import com.avectis.transportcontrolSE.facade.BarrierFacade;
+import com.avectis.transportcontrolSE.facade.InfoTableFacade;
+import com.avectis.transportcontrolSE.facade.ScannerFacade;
+import com.avectis.transportcontrolSE.facade.TrafficLightFacade;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;

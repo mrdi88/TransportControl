@@ -1,12 +1,12 @@
 
-import com.avectis.transportcontrol.facade.CarFacade;
-import com.avectis.transportcontrol.facade.CardFacade;
-import com.avectis.transportcontrol.facade.QueueFacade;
-import com.avectis.transportcontrol.view.CarView;
-import com.avectis.transportcontrol.view.CardView;
-import com.avectis.transportcontrol.view.CargoView;
-import com.avectis.transportcontrol.view.DriverView;
-import com.avectis.transportcontrol.view.QueueView;
+import com.avectis.transportcontrolSE.facade.CarFacade;
+import com.avectis.transportcontrolSE.facade.CardFacade;
+import com.avectis.transportcontrolSE.facade.QueueFacade;
+import com.avectis.transportcontrolSE.view.CarView;
+import com.avectis.transportcontrolSE.view.CardView;
+import com.avectis.transportcontrolSE.view.CargoView;
+import com.avectis.transportcontrolSE.view.DriverView;
+import com.avectis.transportcontrolSE.view.QueueView;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;

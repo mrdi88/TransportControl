@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-import com.avectis.transportcontrol.control.scanner.CardScanner;
-import com.avectis.transportcontrol.control.scanner.CardScannerAdapterCOM;
-import com.avectis.transportcontrol.control.scanner.TestListener;
+import com.avectis.transportcontrolSE.control.scanner.CardScanner;
+import com.avectis.transportcontrolSE.control.scanner.CardScannerAdapterCOM;
+import com.avectis.transportcontrolSE.control.scanner.TestListener;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
