@@ -3,10 +3,10 @@ package com.avectis.transportcontrol.control.scanner;
 /**
  * Created by vitaly on 02.09.2016.
  */
-public class Scanner {
+public class Scanner_Test {
     public String name;
-    private ScannerAdapter scannerAdapter;
-    public Scanner(String scannerName, ScannerAdapter scannerAdapter){
+    private ScannerAdapter_Test scannerAdapter;
+    public Scanner_Test(String scannerName, ScannerAdapter_Test scannerAdapter){
         this.name = scannerName;
         this.scannerAdapter = scannerAdapter;
     }
@@ -14,14 +14,14 @@ public class Scanner {
         return this.scannerAdapter.GetData();
     }
 
-    public Scanner() {
+    public Scanner_Test() {
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setScannerAdapter(ScannerAdapter scannerAdapter) {
+    public void setScannerAdapter(ScannerAdapter_Test scannerAdapter) {
         this.scannerAdapter = scannerAdapter;
     }
     

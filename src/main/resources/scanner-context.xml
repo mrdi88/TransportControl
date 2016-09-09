@@ -10,7 +10,7 @@
             p:parity="0">
         </bean>
         <bean id="S1Adapter"  parent="AdapterScannerSetting">
-            <constructor-arg value="COM1" index="0"/>
+            <constructor-arg value="COM6" index="0"/>
 
         </bean>
         <bean id="S2Adapter" parent="AdapterScannerSetting">

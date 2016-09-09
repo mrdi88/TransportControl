@@ -2,11 +2,14 @@ package com.avectis.transportcontrol.control.scanner;
 
 import jssc.SerialPort;
 import jssc.SerialPortException;
+import jssc.SerialPortEvent;
+import jssc.SerialPortEventListener;
+
 
 /**
  * Created by vitaly on 02.09.2016.
  */
-public class ScannerAdapterCOM implements ScannerAdapter {
+public class ScannerAdapterCOM_Test implements ScannerAdapter_Test {
 
     private SerialPort serialPort; //Имя COM-порта
     private int baudRate;
@@ -14,24 +17,33 @@ public class ScannerAdapterCOM implements ScannerAdapter {
     private int stopBits;
     private int parity;
 
-    public ScannerAdapterCOM(){ }
-    public ScannerAdapterCOM(String portName){
+    public ScannerAdapterCOM_Test(){ }
+    public ScannerAdapterCOM_Test(String portName){
         try{
             this.serialPort = new SerialPort(portName);
             this.serialPort.openPort();
             this.serialPort.setParams(this.baudRate, this.dataBits, this.stopBits, this.parity);
             this.serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN | SerialPort.FLOWCONTROL_RTSCTS_OUT);
+            //this.serialPort.addEventListener(new EventCOM(), this.serialPort.MASK_RXCHAR);
         }
         catch (SerialPortException e){
             e.printStackTrace();
         }
     }
-    @Override
-    public String GetData() {
-        Send();
-        Receive();
-        return null;
+    
+    public class EventCOM implements SerialPortEventListener{
+
+        @Override
+        public void serialEvent(SerialPortEvent spe) {
+            System.out.println("OK");
+        }
+//    
     }
+        @Override
+        public String GetData(){
+            return "123";
+        }
+        
     private void Send(){
         System.out.println("Write to " + this.serialPort.getPortName());
     }

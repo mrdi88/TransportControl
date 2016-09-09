@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-import com.avectis.transportcontrol.control.scanner.Scanner;
-import com.avectis.transportcontrol.control.scanner.ScannerAdapterCOM;
+import com.avectis.transportcontrol.control.scanner.CardScanner;
+import com.avectis.transportcontrol.control.scanner.CardScannerAdapterCOM;
+import com.avectis.transportcontrol.control.scanner.TestListener;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
@@ -38,17 +39,30 @@ public class ScanerJUnitTest {
     public void tearDown() {
     }
 
+    
 
     @Test
-    public void hello() {
-        Scanner sc = new Scanner();
-        ScannerAdapterCOM sac=new ScannerAdapterCOM("com1"); 
-        sac.setBaudRate(9600);
-        sac.setDataBits(8);
-        sac.setParity(0);
-        sac.setStopBits(1);
-        sc.setName("scan1");
-        sc.setScannerAdapter(sac);
-        assertEquals(null,sc.GetData());
+    public void mainTest() throws InterruptedException {
+        
+        System.out.println("Test started");
+        
+        CardScannerAdapterCOM AdapterTest = new CardScannerAdapterCOM("com6", 9600, 8, 1, 0);
+        CardScanner ScannerTest = new CardScanner("Scanner 1", AdapterTest);
+        
+        TestListener L1 = new TestListener();
+        TestListener L2 = new TestListener();
+        TestListener L3 = new TestListener();
+
+        ScannerTest.addListener(L1);
+        ScannerTest.addListener(L2);
+        ScannerTest.addListener(L3);
+        
+        Thread.sleep(100000);
+        
+        AdapterTest.disconnect();
+        System.out.println("Test finished");
+        
     }
+    
+    
 }
